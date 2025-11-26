@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Heroimg from "../components/IMG/abouthero.png";
-import newArrival1 from "../components/IMG/newArrival1.jpg";
-import newArrival2 from "../components/IMG/newArrival2.jpg";
-import newArrival3 from "../components/IMG/newArrival3.jpg";
-import newArrival4 from "../components/IMG/newArrival4.jpg";
+import newArrival1 from "../components/IMG/newarrival1.jpg";
+import newArrival2 from "../components/IMG/newarrival2.jpg";
+import newArrival3 from "../components/IMG/newarrival3.jpg";
+import newArrival4 from "../components/IMG/newarrival4.jpg";
 import Jewelry1 from "../components/IMG/jewelry1.jpg";
 import Jewelry2 from "../components/IMG/jewelry2.jpg";
 import Jewelry3 from "../components/IMG/jewelry3.jpg";
