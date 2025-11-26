@@ -3,7 +3,7 @@ import Hero from "../components/Hero";
 import HeroBanner from "../components/HeroBanner";
 import ProductSection from "../components/ProductSection";
 import CategoryBanner from "../components/CategoryBanner";
-import newArrival1 from "../components/IMG/newArrival1.jpg";
+import newArrival1 from "../components/IMG/newarrival1.jpg";
 import newArrival2 from "../components/IMG/newArrival2.jpg";
 import newArrival3 from "../components/IMG/newArrival3.jpg";
 import newArrival4 from "../components/IMG/newArrival4.jpg";
