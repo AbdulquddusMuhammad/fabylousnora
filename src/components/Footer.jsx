@@ -143,18 +143,7 @@ const Footer = () => {
                 "linear-gradient(343.25deg, rgba(255, 255, 255, 0.15) -25.18%, rgba(189, 0, 124, 0.15) 86.16%)",
             }}
           />
-          <p
-            className="font-bold tracking-widest opacity-30 select-none pointer-events-none"
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: "clamp(68px, 13vw, 110px)",
-              lineHeight: "1",
-              letterSpacing: "0.1em",
-              color: "#BD007C",
-            }}
-          >
-            FABULOUS BY NORA
-          </p>
+          
         </div>
       </div>
     </footer>
