@@ -83,10 +83,17 @@ function OrderSummary({ cartItems, shippingFee, handleMakePayment }) {
             {/* Make Payment Button */}
             <button 
                 onClick={handleMakePayment}
-                className="w-full bg-[#6A0DAD] hover:bg-[#5a0ca0] text-white font-bold text-lg py-2 transition mt-6 disabled:bg-gray-400"
+                className="w-full bg-[#6A0DAD] font-nunito hover:bg-[#5a0ca0] text-white font-bold text-lg py-2 transition mt-6 disabled:bg-gray-400"
                 disabled={!cartItems.length}
             >
                 Make Payment
+            </button>
+            <button 
+                onClick={handleMakePayment}
+                className="w-full bg-[#ffffff] font-nunito text-[#6A0DAD] border-1 border-[#6A0DAD]  font-bold text-lg py-2 transition mt-6 disabled:bg-gray-400"
+                disabled={!cartItems.length}
+            >
+                Buy Now Pay Later
             </button>
         </div>
     );

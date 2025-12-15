@@ -431,7 +431,7 @@ const ShopForMen = () => {
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed inset-y-0 left-0 w-full max-w-sm bg-white z-50 shadow-2xl lg:hidden"
+              className="fixed inset-y-0 left-0 w-[88%] bg-white z-50 shadow-2xl lg:hidden"
             >
               <FilterSidebar
                 onApply={handleApplyFilters}
