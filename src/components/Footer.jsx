@@ -8,20 +8,37 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 
 const Footer = () => {
+  // Navigation items using IDs to match your header logic
+  const categories = [
+    { name: "Men", id: "men" },
+    { name: "Women", id: "women" },
+    { name: "Children", id: "children" },
+    { name: "Accessories", id: "accessories" },
+    { name: "Jewelry", id: "jewelry" },
+  ];
+
+  const quickLinks = [
+    { name: "About Us", id: "aboutus" },
+    { name: "Privacy Policy", id: "privacy-policy" },
+    { name: "Shipping Policy", id: "shipping-policy" },
+    { name: "Terms & Condition", id: "terms-and-conditions" },
+    { name: "Refund Policy", id: "refund-policy" },
+  ];
+
   return (
     <footer className="w-full bg-[#4A1F8C] text-white pt-12 pb-16 md:pt-16 md:pb-20 px-6 md:px-16 lg:px-24">
       <div className="max-w-7xl mx-auto">
-
+        
         {/* MAIN GRID */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10 md:gap-12 text-sm opacity-80 mb-12">
 
-          {/* ABOUT SECTION 1: About + Social */}
+          {/* SECTION 1: Brand Info */}
           <div className="sm:col-span-1 lg:col-span-5 space-y-7">
             <h2
               className="text-3xl md:text-4xl font-bold opacity-100"
               style={{ fontFamily: '"Playfair Display", serif' }}
             >
-              FabulouslyNora
+              FabulousbyNora
             </h2>
 
             <p
@@ -29,7 +46,7 @@ const Footer = () => {
               style={{ fontFamily: "Nunito, sans-serif", lineHeight: "160%" }}
             >
               From luxury outfits to well-crafted accessories, we bring you the finest
-              fashion items for women and children. Shop top-notch quality at affordable
+              fashion items for women, Men and Kids. Shop top-notch quality at affordable
               prices and enjoy a seamless shopping experience.
             </p>
 
@@ -50,51 +67,50 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* SECTION 2: Categories + Quick Links – 2 columns on mobile/tablet */}
+          {/* SECTION 2: Categories + Quick Links (Using Navbar Logic) */}
           <div className="grid grid-cols-2 gap-x-12 gap-y-8 sm:col-span-1 lg:col-span-4">
-            {/* Categories */}
+            
+            {/* Categories Mapping */}
             <div>
               <h3
-                className="mb-5 font-medium text-base tracking-wider"
+                className="mb-5 font-medium text-base tracking-wider opacity-100 uppercase"
                 style={{ fontFamily: "Nunito, sans-serif" }}
               >
                 Categories
               </h3>
               <ul className="space-y-3">
-                {["Men", "Women", "Children", "Accessories", "Jewelry"].map((item) => (
-                  <li
-                    key={item}
-                    className="hover:text-[#BD007C] transition duration-300 text-sm cursor-pointer"
-                    style={{ fontFamily: "Nunito, sans-serif" }}
-                  >
-                    {item}
+                {categories.map((item) => (
+                  <li key={item.name}>
+                    <a
+                      href={`#${item.id}`}
+                      className="hover:text-[#BD007C] transition duration-300 text-sm block cursor-pointer"
+                      style={{ fontFamily: "Nunito, sans-serif" }}
+                    >
+                      {item.name}
+                    </a>
                   </li>
                 ))}
               </ul>
             </div>
 
-            {/* Quick Links */}
+            {/* Quick Links Mapping */}
             <div>
               <h3
-                className="mb-5 font-medium text-base tracking-wider"
+                className="mb-5 font-medium text-base tracking-wider opacity-100 uppercase"
                 style={{ fontFamily: "Nunito, sans-serif" }}
               >
                 Quick Links
               </h3>
               <ul className="space-y-3">
-                {[
-                  "About Us",
-                  "Privacy Policy",
-                  "Shipping Policy",
-                  "Terms & Condition",
-                  "Refund Policy",
-                ].map((item) => (
-                  <li
-                    key={item}
-                    className="hover:text-[#BD007C] transition duration-300 text-sm cursor-pointer"
-                    style={{ fontFamily: "Nunito, sans-serif" }}
-                  >
-                    {item}
+                {quickLinks.map((item) => (
+                  <li key={item.name}>
+                    <a
+                      href={`#${item.id}`}
+                      className="hover:text-[#BD007C] transition duration-300 text-sm block cursor-pointer"
+                      style={{ fontFamily: "Nunito, sans-serif" }}
+                    >
+                      {item.name}
+                    </a>
                   </li>
                 ))}
               </ul>
@@ -104,7 +120,7 @@ const Footer = () => {
           {/* SECTION 3: Newsletter */}
           <div className="lg:col-span-3">
             <h3
-              className="mb-6 font-medium text-base tracking-wider"
+              className="mb-6 font-medium text-base tracking-wider opacity-100 uppercase"
               style={{ fontFamily: "Nunito, sans-serif" }}
             >
               Newsletter
@@ -113,7 +129,7 @@ const Footer = () => {
               Subscribe to get latest offers
             </p>
 
-            <div className="relative max-w-xs">
+            <form className="relative max-w-xs" onSubmit={(e) => e.preventDefault()}>
               <input
                 type="email"
                 placeholder="Your email"
@@ -121,29 +137,24 @@ const Footer = () => {
                 style={{ fontFamily: "Nunito, sans-serif", fontSize: "15px" }}
               />
               <button
+                type="submit"
                 className="absolute right-0 top-1/2 -translate-y-1/2 text-3xl hover:text-[#BD007C] transition duration-300"
-                aria-label="Subscribe"
               >
                 →
               </button>
-            </div>
+            </form>
           </div>
-
         </div>
 
         {/* Divider */}
         <hr className="border-white/10 my-12" />
 
-        {/* Big Background Text */}
-        <div className="relative overflow-hidden text-center -mt-6">
-          <div
-            className="absolute inset-0 -z-10"
-            style={{
-              background:
-                "linear-gradient(343.25deg, rgba(255, 255, 255, 0.15) -25.18%, rgba(189, 0, 124, 0.15) 86.16%)",
-            }}
-          />
-          
+        {/* Copyright */}
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs opacity-60">
+            <p>© {new Date().getFullYear()} FabulousbyNora. All rights reserved.</p>
+            <div className="flex gap-4">
+                <span>Secure Payments: Visa, Mastercard, PayPal</span>
+            </div>
         </div>
       </div>
     </footer>

@@ -245,7 +245,7 @@ const FilterSidebar = ({ onApply, onClose }) => {
 
       <button
         onClick={applyFilters}
-        className="w-full bg-[#BD007C] hover:bg-[#9b0066] text-white font-semibold py-2 rounded-md transition shadow-lg"
+        className="w-full bg-[#BD007C] hover:bg-[#9b0066] text-white font-semibold text-[12px]  py-2  transition shadow-lg"
       >
         Apply Filters
       </button>
@@ -296,7 +296,8 @@ const ShopForMen = () => {
 
   return (
     <>
-      <section className="relative w-full h-[45vh] md:h-[52vh] flex items-center justify-center overflow-hidden">
+      <section
+       className="relative w-full h-[45vh] md:h-[52vh] flex items-center justify-center overflow-hidden">
         <motion.img
           src={Heroimg}
           alt="Shop For Men"

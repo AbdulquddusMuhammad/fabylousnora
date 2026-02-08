@@ -37,14 +37,14 @@ function CartItem({ item, setCartItems }) {
                     <div className="flex items-center border border-gray-300 w-max">
                         <button 
                             onClick={() => handleQuantityChange(-1)} 
-                            className="px-2 py-1 text-sm text-gray-700 hover:bg-gray-100"
+                            className="px-2 py-1 text-[12px]  text-sm text-gray-700 hover:bg-gray-100"
                         >
                             -
                         </button>
                         <span className="px-3 py-1 text-sm border-x border-gray-300">{item.quantity}</span>
                         <button 
                             onClick={() => handleQuantityChange(1)} 
-                            className="px-2 py-1 text-sm text-gray-700 hover:bg-gray-100"
+                            className="px-2 py-1 text-sm text-[12px]  text-gray-700 hover:bg-gray-100"
                         >
                             +
                         </button>
@@ -55,7 +55,7 @@ function CartItem({ item, setCartItems }) {
                 
                 <button 
                     onClick={handleRemove} 
-                    className="text-xs text-red-500 hover:text-red-700 mt-1"
+                    className="text-xs text-red-500 text-[12px] hover:text-red-700 mt-1"
                 >
                     Remove
                 </button>
@@ -124,13 +124,13 @@ function CartOverlay({ isOpen, onClose, cartItems, setCartItems }) {
                 {/* Footer: Subtotal and Action Buttons */}
                 <div className="p-5 border-t border-gray-200">
                     <div className='flex justify-between items-center mb-4'>
-                        <p className='text-lg font-semibold'>Subtotal:</p>
-                        <p className='text-xl text-[#6A0DAD]'>${subtotal.toFixed(2)}</p>
+                        <p className='text-l font-semibold'>Subtotal:</p>
+                        <p className='text-l text-[#6A0DAD]'>${subtotal.toFixed(2)}</p>
                     </div>
                     
                     {/* Checkout Button: Correctly links to the /checkout page */}
                     <Link to="/checkout"
-                        className="block w-full text-center bg-[#6A0DAD] hover:bg-[#5a0ca0] text-white font-bold text-lg py-2 transition mb-3"
+                        className="block w-full text-center bg-[#6A0DAD] hover:bg-[#5a0ca0] text-white text-[12px]  font-bold text-lg py-2 transition mb-3"
                         onClick={onClose} 
                     >
                         Proceed to Checkout
@@ -139,7 +139,7 @@ function CartOverlay({ isOpen, onClose, cartItems, setCartItems }) {
                     {/* Continue Shopping Button */}
                     <button 
                         onClick={onClose}
-                        className="w-full text-center border-2 border-[#6A0DAD] hover:border-[#5a0ca0] text-[#6A0DAD] font-bold text-lg py-2 transition"
+                        className="w-full text-center text-[12px]  border-2 border-[#6A0DAD] hover:border-[#5a0ca0] text-[#6A0DAD] font-bold text-lg py-2 transition"
                     >
                         Continue Shopping
                     </button>

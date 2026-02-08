@@ -8,6 +8,7 @@ import Heroimg from "../components/IMG/abouthero.png";
 
 const AboutHero = () => {
   return (
+    
     <section className="relative w-full h-[45vh] md:h-[52vh] flex items-center justify-center text-center overflow-hidden">
       <motion.img
         src={Heroimg}
@@ -78,8 +79,8 @@ function Aboutus() {
                 About The Founder
               </h2>
               <p>
-                Bukola Nora Oyetunji is the visionary Founder and Creative Director behind Fabulous by Nora LLC, fashion house known for its bold creativity, cultural elegance, and modern couture craftsmanship. Driven by a deep passion for storytelling through fashion, Bukola Nora creates designs that merge African heritage with contemporary luxury, resulting in pieces that are powerful, expressive, and unforgettable.
-                Born and brought up by a Nigerian mother (God rest her soul) who was into the sourcing and sales of African fabrics, Bukola was able to learn a lot. Bukola also learned a bit of fashion design from her mom which she has overtime developed into something bigger than she could have imagined. Through Fabulous by Nora, Bukola is carrying on her mom’s legacy.
+                Bukola Nora Oyetunji is the visionary Founder and Creative Director behind Fabulous by Nora LLC, A fashion house known for its bold creativity, cultural elegance, and modern couture craftsmanship. Driven by a deep passion for storytelling through fashion, Bukola Nora creates designs that merge African heritage with contemporary luxury, resulting in pieces that are powerful, expressive, and unforgettable.
+                Born and raised by a Nigerian mother (God rest her soul) who was into the sourcing and sales of African fabrics, Bukola was able to learn a lot. Bukola also learned a bit of fashion design from her mom which she has overtime developed into something bigger than she could have imagined. Through Fabulous by Nora, Bukola is carrying on her mom’s legacy.
               </p>
               <p>
                 With an eye for detail and a love for vibrant textiles, especially Ankara and other African-inspired fabrics, Bukola transforms traditional elements into innovative silhouettes that redefine luxury and ready-to-wear fashion. Her work celebrates confidence, self-love, and individuality, empowering clients to embrace their unique beauty through exceptional design.

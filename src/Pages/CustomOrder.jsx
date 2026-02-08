@@ -121,7 +121,7 @@ function CustomOrder() {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full mt-4 py-2 bg-[rgba(72,31,128,1)] hover:bg-[rgba(72,31,128,0.9)] text-white font-nunito font-semibold text-[16px] transition-all duration-200"
+            className="w-full mt-4 py-2 bg-[rgba(72,31,128,1)] hover:bg-[rgba(72,31,128,0.9)] text-white font-nunito font-semibold text-[12px] transition-all duration-200"
           >
             Send Request
           </button>

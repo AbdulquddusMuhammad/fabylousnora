@@ -4,9 +4,9 @@ import React, { useState, useEffect } from 'react';
 const policies = {
   terms: {
     title: "Terms & Conditions",
-    lastUpdated: "November 2025",
+    lastUpdated: "February 2026",
     content: `Terms & Conditions 
-Last Updated: November 2025
+Last Updated: February 2026
 
 Welcome to Fabulous by Nora. These Terms & Conditions (“Terms”) govern your use of our website, products, and services. By accessing or making a purchase from our site, you agree to be bound by these Terms. Please read them carefully.
 
@@ -76,9 +76,9 @@ Email: info@fabulousbynora.com`,
 
   privacy: {
     title: "Privacy Policy",
-    lastUpdated: "November 2025",
+    lastUpdated: "February 2026",
     content: `Privacy Policy  
-Last Updated: November 2025
+Last Updated: February 2026
 
 At Fabulous by Nora, we value your privacy and are committed to protecting your personal information. This Privacy Policy explains how we collect, use, share, and safeguard your data when you visit our website or make a purchase.
 
@@ -118,7 +118,7 @@ Email: info@fabulousbynora.com`,
 
   shipping: {
     title: "Shipping Policy",
-    lastUpdated: "November 2025",
+    lastUpdated: "February 2026",
     content: `Shipping Policy  
 Thank you for shopping with Fabulous by Nora. We are committed to ensuring that your items are delivered safely, promptly, and in excellent condition.
 
@@ -152,7 +152,7 @@ Email: info@fabulousbynora.com`,
 
   refund: {
     title: "Refund Policy",
-    lastUpdated: "November 2025",
+    lastUpdated: "February 2026",
     content: `Refund Policy 
 
 Your satisfaction is very important to us.

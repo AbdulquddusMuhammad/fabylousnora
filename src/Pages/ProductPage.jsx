@@ -9,7 +9,7 @@ function ProductDetailsContent({ selectedSize, setSelectedSize, quantity, handle
   return (
     <>
       <div className="mb-6">
-        <h3 className="font-bold text-gray-800 mb-3 text-base">
+        <h3 className="font-bold text-gray-800 mb-3 text-base ">
           Select Size: <span className="font-normal text-gray-500">{selectedSize}</span>
         </h3>
         <div className="flex gap-3 flex-wrap">
@@ -190,14 +190,14 @@ function ProductPage() {
                 className={`pb-3 text-lg font-bold relative ${activeTab === 'details' ? 'text-gray-900' : 'text-gray-500'}`}
               >
                 Details
-                {activeTab === 'details' && <span className="absolute bottom-0 left-0 w-full h-1 bg-[#6A0DAD]"></span>}
+                {activeTab === 'details' && <span className="absolute text-[12px]  bottom-0 left-0 w-full h-1 bg-[#6A0DAD]"></span>}
               </button>
               <button
                 onClick={() => setActiveTab('description')}
                 className={`pb-3 text-lg font-bold relative ${activeTab === 'description' ? 'text-gray-900' : 'text-gray-500'}`}
               >
                 Description
-                {activeTab === 'description' && <span className="absolute bottom-0 left-0 w-full h-1 bg-[#6A0DAD]"></span>}
+                {activeTab === 'description' && <span className="absolute text-[12px]  bottom-0 left-0 w-full h-1 bg-[#6A0DAD]"></span>}
               </button>
             </div>
 
@@ -221,13 +221,13 @@ function ProductPage() {
           <div className="flex flex-col gap-4">
             <button 
                 onClick={handleAddToCart}
-                className="w-full bg-[#6A0DAD] hover:bg-[#5a0ca0] text-white font-bold text-lg py-2 transition"
+                className="w-full bg-[#6A0DAD] hover:bg-[#5a0ca0] text-white text-[12px]  font-bold text-lg py-2 transition"
             >
               Add to Cart
             </button>
             <Link
               to="/category/men"
-              className="w-full text-center border-2 border-[#6A0DAD] hover:border-[#5a0ca0] text-[#6A0DAD] font-bold text-lg py-2 transition"
+              className="w-full text-center text-[12px]  border-2 border-[#6A0DAD] hover:border-[#5a0ca0] text-[#6A0DAD] font-bold text-lg py-2 transition"
             >
               Continue Shopping
             </Link>
