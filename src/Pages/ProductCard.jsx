@@ -8,7 +8,17 @@ const ProductCard = ({ id, image, title, price }) => {
   // Added 'id' prop
   return (
     // Wrapped the card content in a Link component
-    <Link to={`/product/${id}`} className="flex flex-col items-center group">
+    <Link
+      to={`/product/${id}`}
+      onClick={() => {
+        setTimeout(() => {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+        }, 100);
+      }}
+      className="flex flex-col items-center group">
       <div className="w-full aspect-square overflow-hidden mb-4 shadow-sm">
         <img src={image} alt={title} className="object-cover w-full h-full transition duration-500 group-hover:scale-110" />
       </div>
