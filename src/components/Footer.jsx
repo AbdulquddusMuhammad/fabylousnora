@@ -14,7 +14,6 @@ const Footer = () => {
     { name: "Women", id: "women" },
     { name: "Children", id: "children" },
     { name: "Accessories", id: "accessories" },
-    { name: "Jewelry", id: "jewelry" },
   ];
 
   const scrollToTop = () => {
@@ -79,9 +78,9 @@ const Footer = () => {
                     <Link
                       onClick={() => {
                         scrollToTop();
-                        setType(item.name === "Jewelry" ? "Accessories" : item.name);
+                        setType(item.name);
                       }}
-                      to={`category/${item.id === "jewelry" ? "accessories" : item.name}`}
+                      to={`category/${item.id}`}
                       className="hover:text-[#BD007C] transition duration-300 text-sm block cursor-pointer"
                       style={{ fontFamily: "Nunito, sans-serif" }}>
                       {item.name}

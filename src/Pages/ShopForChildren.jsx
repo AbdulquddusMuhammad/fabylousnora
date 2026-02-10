@@ -47,10 +47,10 @@ const ShopForChildren = () => {
   return (
     <>
       <section className="relative w-full h-[45vh] md:h-[52vh] flex items-center justify-center overflow-hidden">
-        <motion.img src={childrenHeroImg} alt="Shop For Accessories" className="absolute inset-0 w-full h-full object-cover object-center" style={{ objectPosition: "0 -110px" }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.2 }} />
+        <motion.img src={childrenHeroImg} alt="Shop For Children" className="absolute inset-0 w-full h-full object-cover object-center" style={{ objectPosition: "0 -110px" }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.2 }} />
         <div className="absolute inset-0 bg-black/50" />
         <motion.h1 initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} className="relative z-10 text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-center px-4 leading-tight" style={{ fontFamily: '"Playfair Display", serif' }}>
-          Accessories
+          Children
         </motion.h1>
       </section>
 

@@ -16,11 +16,6 @@ export default function SimpleAdmin() {
   const [editingId, setEditingId] = useState(null);
   const [message, setMessage] = useState("");
 
-  // Load products on mount
-  useEffect(() => {
-    loadProducts();
-  }, []);
-
   const loadProducts = async () => {
     setLoading(true);
     try {
@@ -33,6 +28,11 @@ export default function SimpleAdmin() {
       setLoading(false);
     }
   };
+
+  // Load products on mount
+  useEffect(() => {
+    loadProducts();
+  }, []);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
