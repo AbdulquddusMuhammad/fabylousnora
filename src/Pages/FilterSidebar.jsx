@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
+import { useContext } from "react";
+import { AppContext } from "../context/context";
 
 // ==========================
 // 2. Filter Sidebar (No Change)
 // ==========================
 const FilterSidebar = ({ onApply, onClose }) => {
-  const categories = ["Kaftan", "Shirts", "Agbada", "Footwear", "Trousers"];
+  const { type } = useContext(AppContext);
+
+  const [categories, setCategories] = useState([]);
+  const menCategories = ["Kaftan", "Shirts", "Agbada", "Footwear", "Trousers"];
+  const womenCategories = ["Dresses", "Tops", "Pants", "Skirts", "Boubous"];
+  const accessoriesCategories = ["Caps", "Geles/headties", "Shoes and purses", "Jewelry", "Handbags"];
+  const kidsCategories = ["Tops", "Pants", "2pc sets", "Dresses", "Skirts", "Tops", "Pants"];
   const [selectedCats, setSelectedCats] = useState([]);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000);
@@ -36,6 +44,22 @@ const FilterSidebar = ({ onApply, onClose }) => {
     onClose?.();
   };
 
+  useEffect(() => {
+    if (type === "Men") {
+      setSelectedCats(menCategories);
+      setCategories(menCategories);
+    } else if (type === "Women") {
+      setSelectedCats(womenCategories);
+      setCategories(womenCategories);
+    } else if (type === "Accessories") {
+      setSelectedCats(accessoriesCategories);
+      setCategories(accessoriesCategories);
+    } else if (type === "Children") {
+      setSelectedCats(kidsCategories);
+      setCategories(kidsCategories);
+    }
+  }, [type]);
+
   return (
     <div className="w-[80%] h-full p-5 bg-white-500 overflow-y-auto relative">
       {/* Close Button - visible on mobile drawer */}
@@ -61,7 +85,7 @@ const FilterSidebar = ({ onApply, onClose }) => {
           letterSpacing: "0px",
           verticalAlign: "middle",
         }}>
-        Men Filter
+        {type} Filter
       </h3>
 
       {/* Categories */}
