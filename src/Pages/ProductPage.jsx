@@ -61,10 +61,13 @@ function ProductPage() {
   const [relatedProducts, setRelatedProducts] = useState([]);
 
   // NEW STATE: To control the visibility of the Cart Overlay
-  const [showCart, setShowCart] = useState(false);
+  // const [showCart, setShowCart] = useState(false);
+  const { showCart } = useContext(AppContext);
+  const { setShowCart } = useContext(AppContext);
 
   // NEW STATE: Basic local cart state for demonstration
-  const [cartItems, setCartItems] = useState([]);
+  // const [cartItems, setCartItems] = useState([]);
+  const { cartItems, setCartItems } = useContext(AppContext);
 
   useEffect(() => {
     const foundProduct = DUMMY_PRODUCTS.find((p) => p.id === Number(id));
@@ -118,7 +121,7 @@ function ProductPage() {
 
   return (
     <main className="py-6 px-4 sm:px-6 lg:px-[6%] max-w-7xl mx-auto font-nunito">
-      <CartOverlay isOpen={showCart} onClose={() => setShowCart(false)} cartItems={cartItems} setCartItems={setCartItems} />
+      {/* <CartOverlay isOpen={showCart} onClose={() => setShowCart(false)} cartItems={cartItems} setCartItems={setCartItems} /> */}
 
       <button onClick={() => navigate(-1)} className="mb-8 flex items-center text-gray-600 hover:text-[#6A0DAD] text-sm font-medium">
         <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

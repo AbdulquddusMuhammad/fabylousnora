@@ -2,11 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookF, faInstagram, faTwitter, faLinkedinIn } from "@fortawesome/free-brands-svg-icons";
+import { useLocation } from "react-router-dom";
 import { AppContext } from "../context/context";
 import { useContext } from "react";
 
 const Footer = () => {
   const { setType } = useContext(AppContext);
+
+  const location = useLocation();
 
   // Navigation items using IDs to match your header logic
   const categories = [
@@ -33,7 +36,9 @@ const Footer = () => {
     { name: "Refund Policy", id: "refund-policy" },
   ];
 
-  return (
+  return location.pathname === "/events" || location.pathname === "/events/eventitem" || location.pathname === "/success" || location.pathname === "/" ? (
+    <></>
+  ) : (
     <footer className="w-full bg-[#4A1F8C] text-white pt-12 pb-16 md:pt-16 md:pb-20 px-6 md:px-16 lg:px-24">
       <div className="max-w-7xl mx-auto">
         {/* MAIN GRID */}

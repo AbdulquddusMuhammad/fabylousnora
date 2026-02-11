@@ -14,9 +14,7 @@ import React from "react";
 import galleryHero from "../components/IMG/Fabulous gallery.png";
 
 const EventShowCase = () => {
-  console.log(useContext(AppContext));
-
-  const { eventProductsClothes, selectedCothes, setSelectedCothes } = useContext(AppContext);
+  const { eventProductsClothes, selectedCothes, setSelectedCothes, DUMMY_PRODUCTS } = useContext(AppContext);
 
   const navigate = useNavigate();
 
@@ -36,31 +34,34 @@ const EventShowCase = () => {
 
         {/* <div className="eventsClothes grid grid-cols-4 gap-auto bg-white p-16"> */}
         <div className="eventsClothes grid grid-cols-2 lg:grid-cols-4 bg-white justify-between mt-10 px-4 md:px-16 mt-20">
-          {eventProductsClothes.map((product, index) => (
-            <div
-              onClick={() => {
-                setSelectedCothes(index);
-                navigateToEventItem();
-              }}
-              key={index}
-              className="eventProductCard shadow-lg rounded-lg w-[45vw] lg:w-[21vw]  px-3 mb-6 hover:scale-105 transition-transform cursor-pointer duration-400">
-              <img src={product.image} alt={product.name} className="eventProductImage w-full h-[30vh] md:h-[40vh]" />
-              <div className="flex justify-between p-2 md:p-5">
-                <div className="text-[2.5vw] md:text-[1.2vw]" style={{ fontFamily: "Playfair Display" }}>
-                  {product.name}
+          {DUMMY_PRODUCTS.map((product, index) => {
+            if (!product.isEvent) return null; // Skip products that are not for events
+            return (
+              <div
+                onClick={() => {
+                  setSelectedCothes(index);
+                  navigateToEventItem();
+                }}
+                key={index}
+                className="eventProductCard shadow-lg rounded-lg w-[45vw] lg:w-[21vw]  px-3 mb-6 hover:scale-105 transition-transform cursor-pointer duration-400">
+                <img src={product.image} alt={product.title} className="eventProductImage w-full h-[30vh] md:h-[40vh]" />
+                <div className="flex justify-between p-2 md:p-5">
+                  <div className="text-[2.5vw] md:text-[1.2vw]" style={{ fontFamily: "Playfair Display" }}>
+                    {product.title}
+                  </div>
+                  <div style={{ fontFamily: "Manrope" }} className="text-[2.5vw] md:text-[1.2vw]">
+                    {DUMMY_PRODUCTS.filter((item) => item.title === product.title && item.isEvent).length} Images
+                  </div>
                 </div>
-                <div style={{ fontFamily: "Manrope" }} className="text-[2.5vw] md:text-[1.2vw]">
-                  {product.no_ofImages} Images
+                <div className="flex pb-1.5 px-2 md:pb-5 md:px-5 items-center">
+                  <img src={calenderIcon} alt="Calendar Icon" className="w-[3vw] md:w-5 md:h-5" />
+                  <div className="ml-2 text-[#00000080] text-[2vw] md:text-[1.2vw]" style={{ fontFamily: "Manrope" }}>
+                    {product.date}
+                  </div>
                 </div>
               </div>
-              <div className="flex pb-1.5 px-2 md:pb-5 md:px-5 items-center">
-                <img src={calenderIcon} alt="Calendar Icon" className="w-[3vw] md:w-5 md:h-5" />
-                <div className="ml-2 text-[#00000080] text-[2vw] md:text-[1.2vw]" style={{ fontFamily: "Manrope" }}>
-                  {product.date}
-                </div>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>

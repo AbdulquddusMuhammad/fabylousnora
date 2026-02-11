@@ -61,18 +61,6 @@ import Jewelry8 from "../components/IMG/jewelry8.png";
 const AppContext = createContext();
 const AppProvider = ({ children }) => {
   const [selectedCothes, setSelectedCothes] = useState(0);
-  const eventProductsClothes = [
-    { name: "StreetOuk", image: eventSample1, no_ofImages: 16, date: "12-04-2026" },
-    { name: "Balancing", image: eventSample2, no_ofImages: 16, date: "12-04-2026" },
-    { name: "StreetOuk", image: sample4, no_ofImages: 16, date: "12-04-2026" },
-    { name: "Korede", image: sample3, no_ofImages: 16, date: "12-04-2026" },
-    { name: "StreetOuk", image: sample4, no_ofImages: 16, date: "12-04-2026" },
-    { name: "Balancing", image: sample5, no_ofImages: 16, date: "12-04-2026" },
-    { name: "Optimuz", image: sample7, no_ofImages: 16, date: "12-04-2026" },
-    { name: "StreetOuk", image: sample6, no_ofImages: 16, date: "12-04-2026" },
-    { name: "StreetOuk", image: sample4, no_ofImages: 16, date: "12-04-2026" },
-    { name: "StreetOuk", image: sample8, no_ofImages: 16, date: "12-04-2026" },
-  ];
 
   const DUMMY_PRODUCTS = [
     { id: 1, isEvent: false, type: "Women", title: "African Suit Set", price: 189.99, image: newArrival1, category: "Agbada", date: "2026-08-03" },
@@ -107,21 +95,23 @@ const AppProvider = ({ children }) => {
     { id: 30, isEvent: false, type: "Accessories", title: "Brocade Gown", price: 310.0, image: Jewelry6, category: "Silver", date: "2026-03-22" },
     { id: 31, isEvent: false, type: "Accessories", title: "Brocade Gown", price: 200.0, image: Jewelry7, category: "Emerald", date: "2026-04-16" },
     { id: 32, isEvent: false, type: "Accessories", title: "Brocade Gown", price: 120.0, image: Jewelry8, category: "Bronze", date: "2026-07-15" },
-    { id: 33, isEvent: true, type: "Women", title: "StreetOuk", price: 230, image: eventSample1, category: "Event", date: "12-04-2026", no_ofImages: 16 },
-    { id: 34, isEvent: true, type: "Women", title: "Balancing", price: 55, image: eventSample2, category: "Event", date: "12-04-2026", no_ofImages: 16 },
-    { id: 35, isEvent: true, type: "Women", title: "StreetOuk", price: 90, image: sample4, category: "Event", date: "12-04-2026", no_ofImages: 16 },
-    { id: 36, isEvent: true, type: "Women", title: "Korede", price: 100, image: sample3, category: "Event", date: "12-04-2026", no_ofImages: 16 },
-    { id: 37, isEvent: true, type: "Women", title: "StreetOuk", price: 200, image: sample4, category: "Event", date: "12-04-2026", no_ofImages: 16 },
-    { id: 38, isEvent: true, type: "Women", title: "Balancing", price: 180, image: sample5, category: "Event", date: "12-04-2026", no_ofImages: 16 },
-    { id: 39, isEvent: true, type: "Women", title: "Optimuz", price: 250, image: sample7, category: "Event", date: "12-04-2026", no_ofImages: 16 },
-    { id: 40, isEvent: true, type: "Women", title: "StreetOuk", price: 99, image: sample6, category: "Event", date: "12-04-2026", no_ofImages: 16 },
-    { id: 41, isEvent: true, type: "Women", title: "StreetOuk", price: 110, image: sample4, category: "Event", date: "12-04-2026", no_ofImages: 16 },
-    { id: 42, isEvent: true, type: "Women", title: "StreetOuk", price: 120, image: sample8, category: "Event", date: "12-04-2026", no_ofImages: 16 },
+    { id: 33, isEvent: true, type: "Women", title: "StreetOuk", price: 230, image: eventSample1, category: "Event", date: "12-04-2026" },
+    { id: 34, isEvent: true, type: "Women", title: "Balancing", price: 55, image: eventSample2, category: "Event", date: "12-04-2026" },
+    { id: 35, isEvent: true, type: "Women", title: "StreetOuk", price: 90, image: sample4, category: "Event", date: "12-04-2026" },
+    { id: 36, isEvent: true, type: "Women", title: "Korede", price: 100, image: sample3, category: "Event", date: "12-04-2026" },
+    { id: 37, isEvent: true, type: "Women", title: "StreetOuk", price: 200, image: sample4, category: "Event", date: "12-04-2026" },
+    { id: 38, isEvent: true, type: "Women", title: "Balancing", price: 180, image: sample5, category: "Event", date: "12-04-2026" },
+    { id: 39, isEvent: true, type: "Women", title: "Optimuz", price: 250, image: sample7, category: "Event", date: "12-04-2026" },
+    { id: 40, isEvent: true, type: "Women", title: "StreetOuk", price: 99, image: sample6, category: "Event", date: "12-04-2026" },
+    { id: 41, isEvent: true, type: "Women", title: "StreetOuk", price: 110, image: sample4, category: "Event", date: "12-04-2026" },
+    { id: 42, isEvent: true, type: "Women", title: "StreetOuk", price: 120, image: sample8, category: "Event", date: "12-04-2026" },
   ];
 
   const [type, setType] = useState("");
+  const [showCart, setShowCart] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
 
-  return <AppContext.Provider value={{ eventProductsClothes, selectedCothes, setSelectedCothes, DUMMY_PRODUCTS, type, setType }}>{children}</AppContext.Provider>;
+  return <AppContext.Provider value={{ selectedCothes, setSelectedCothes, DUMMY_PRODUCTS, type, setType, showCart, setShowCart, cartItems, setCartItems }}>{children}</AppContext.Provider>;
 };
 export { AppContext, AppProvider };
 

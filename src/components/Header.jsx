@@ -10,6 +10,7 @@ const Header = () => {
   const { setType } = useContext(AppContext);
   const [activeCategory, setActiveCategory] = useState("All");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false); // ← fixed here
+  const { setShowCart } = useContext(AppContext);
 
   const categories = ["All", "Men", "Women", "Children", "Accessories"];
 
@@ -21,13 +22,15 @@ const Header = () => {
     { name: "Events", to: "/events" },
   ];
 
-  return (
+  return location.pathname === "/events" || location.pathname === "/events/eventitem" || location.pathname === "/success" || location.pathname === "/" ? (
+    <></>
+  ) : (
     <header className="bg-white sticky top-0 z-50">
       {/* Top Header */}
       <div className="py-4 px-[6%]">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 flex-shrink-0">
+          <Link to="/homepage" className="flex items-center gap-3 flex-shrink-0">
             <img src={NoraLogo} alt="Fabulous by Nora Logo" className="w-10 h-10 object-contain" />
             <h1
               className="hidden md:block text-xl md:text-2xl"
@@ -60,7 +63,7 @@ const Header = () => {
             <button className="hover:text-[#BD007C] transition">
               <User className="w-5 h-5" />
             </button>
-            <button className="hover:text-[#BD007C] transition">
+            <button onClick={() => setShowCart(true)} className="hover:text-[#BD007C] transition">
               <ShoppingCart className="w-5 h-5" />
             </button>
 
@@ -74,34 +77,31 @@ const Header = () => {
       <div className="h-px bg-gray-200"></div>
 
       {/* Category Navigation */}
-      {useLocation().pathname === "/events" || useLocation().pathname === "/events/eventitem" ? (
-        <></> // No category
-      ) : (
-        <div className="px-[6%] py-4 overflow-x-auto scrollbar-hide">
-          <nav className="flex items-center gap-3 min-w-max">
-            {categories.map((cat) => (
-              <Link
-                key={cat}
-                to={cat === "All" ? "/" : `/category/${cat.toLowerCase()}`}
-                onClick={() => {
-                  setActiveCategory(cat);
-                  setTimeout(() => {
-                    window.scrollTo({
-                      top: 0,
-                      behavior: "smooth",
-                    });
-                  }, 500);
-                  setType(cat);
-                }}
-                className={`px-5 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap
+
+      <div className="px-[6%] py-4 overflow-x-auto scrollbar-hide">
+        <nav className="flex items-center gap-3 min-w-max">
+          {categories.map((cat) => (
+            <Link
+              key={cat}
+              to={cat === "All" ? "/" : `/category/${cat.toLowerCase()}`}
+              onClick={() => {
+                setActiveCategory(cat);
+                setTimeout(() => {
+                  window.scrollTo({
+                    top: 0,
+                    behavior: "smooth",
+                  });
+                }, 500);
+                setType(cat);
+              }}
+              className={`px-5 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap
                 ${activeCategory === cat ? "bg-[#BD007C] text-white" : "text-[#BD007C] bg-[#CCCCCC1A] hover:bg-[#BD007C] hover:text-white"}`}>
-                {cat}
-                {/* {alert(cat)} */}
-              </Link>
-            ))}
-          </nav>
-        </div>
-      )}
+              {cat}
+              {/* {alert(cat)} */}
+            </Link>
+          ))}
+        </nav>
+      </div>
 
       {/* Mobile Sidebar Menu – 85% width */}
       <div className={`fixed inset-0 z-50 lg:hidden transition-all duration-500 ${mobileMenuOpen ? "pointer-events-auto" : "pointer-events-none"}`}>

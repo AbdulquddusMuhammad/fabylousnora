@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Index from "./Pages/Index";
 import AboutUs from "./Pages/Aboutus";
 import "./App.css";
@@ -17,14 +17,27 @@ import AdminDashboard from "./Pages/AdminDashboard";
 import Events from "./Pages/Events";
 import EventShowCase from "./components/EventShowCase";
 import EventItem from "./components/EventItemShowCase";
+import CartOverlay from "./Pages/CartOverlay";
+import LoginPage from "./Pages/LoginPage.jsx";
+import { useContext } from "react";
+import { AppContext } from "./context/context.jsx";
+import PaymentSuccess from "./Pages/PaymentSuccess.jsx";
 
 function App() {
+  const { showCart, setShowCart, cartItems, setCartItems } = useContext(AppContext);
+  const location = useLocation();
+
   return (
-    <BrowserRouter>
-      <Header />
+    <>
+      {location.pathname !== "/" && <Header />}
+      <CartOverlay isOpen={showCart} onClose={() => setShowCart(false)} cartItems={cartItems} setCartItems={setCartItems} />
+      {/* <LoginPage /> */}
       <Routes>
         {/* Public / Store pages */}
-        <Route path="/" element={<Index />} />
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/success" element={<PaymentSuccess />} />
+        {/* <Route path="/" element={<Index />} /> */}
+        <Route path="/homepage" element={<Index />} />
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/custom" element={<CustomOrder />} />
         <Route path="/refund" element={<RefundPolicy />} />
@@ -47,8 +60,9 @@ function App() {
 
         <Route path="/admin" element={<AdminDashboard />} />
       </Routes>
-      <Footer />
-    </BrowserRouter>
+
+      {location.pathname !== "/" && <Footer />}
+    </>
   );
 }
 
