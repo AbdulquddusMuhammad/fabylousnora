@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import NoraLogo from "../components/IMG/noraLogo.png";
+import NoraLogo from "../components/IMG/noralogo.png";
 import { Link } from "react-router-dom";
 
 const BNLogo = () => (
