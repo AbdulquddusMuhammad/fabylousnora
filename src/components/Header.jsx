@@ -22,6 +22,8 @@ const Header = () => {
     { name: "Events", to: "/events" },
   ];
 
+  const location = useLocation();
+
   return location.pathname === "/events" || location.pathname === "/events/eventitem" || location.pathname === "/success" || location.pathname === "/login" ? (
     <></>
   ) : (
