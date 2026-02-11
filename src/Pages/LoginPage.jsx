@@ -60,7 +60,7 @@ export default function LoginPage() {
     } else if (email === loginsInfo.user.email && password === loginsInfo.user.password) {
       // User login successful
       console.log("User logged in");
-      navigate("/homepage");
+      navigate("/");
     } else {
       // Login failed
       console.log("Login failed");

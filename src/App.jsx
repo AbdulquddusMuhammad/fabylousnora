@@ -29,15 +29,15 @@ function App() {
 
   return (
     <>
-      {location.pathname !== "/" && <Header />}
+      <Header />
       <CartOverlay isOpen={showCart} onClose={() => setShowCart(false)} cartItems={cartItems} setCartItems={setCartItems} />
       {/* <LoginPage /> */}
       <Routes>
         {/* Public / Store pages */}
-        <Route path="/" element={<LoginPage />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/success" element={<PaymentSuccess />} />
         {/* <Route path="/" element={<Index />} /> */}
-        <Route path="/homepage" element={<Index />} />
+        <Route path="/" element={<Index />} />
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/custom" element={<CustomOrder />} />
         <Route path="/refund" element={<RefundPolicy />} />
@@ -61,7 +61,7 @@ function App() {
         <Route path="/admin" element={<AdminDashboard />} />
       </Routes>
 
-      {location.pathname !== "/" && <Footer />}
+      <Footer />
     </>
   );
 }

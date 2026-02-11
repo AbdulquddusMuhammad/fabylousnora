@@ -22,7 +22,7 @@ const Header = () => {
     { name: "Events", to: "/events" },
   ];
 
-  return location.pathname === "/events" || location.pathname === "/events/eventitem" || location.pathname === "/success" || location.pathname === "/" ? (
+  return location.pathname === "/events" || location.pathname === "/events/eventitem" || location.pathname === "/success" || location.pathname === "/login" ? (
     <></>
   ) : (
     <header className="bg-white sticky top-0 z-50">
@@ -30,7 +30,7 @@ const Header = () => {
       <div className="py-4 px-[6%]">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/homepage" className="flex items-center gap-3 flex-shrink-0">
+          <Link to="/" className="flex items-center gap-3 flex-shrink-0">
             <img src={NoraLogo} alt="Fabulous by Nora Logo" className="w-10 h-10 object-contain" />
             <h1
               className="hidden md:block text-xl md:text-2xl"

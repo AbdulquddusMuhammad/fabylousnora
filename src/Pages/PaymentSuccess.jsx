@@ -62,7 +62,7 @@ export default function () {
 
       <div style={styles.card}>
         <div style={styles.logoWrapper}>
-          <Link to={"/homepage"} className="flex items-center gap-2">
+          <Link to={"/"} className="flex items-center gap-2">
             {" "}
             <img src={NoraLogo} className="w-10 h-10" alt="" />
           </Link>

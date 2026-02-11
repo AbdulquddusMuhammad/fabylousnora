@@ -204,7 +204,7 @@ function CheckoutPage() {
       </div>
 
       <div className="mt-12 pt-6 border-t border-gray-200 flex justify-start">
-        <Link to="/homepage" className="text-sm text-gray-600 hover:text-[#6A0DAD]">
+        <Link to="/" className="text-sm text-gray-600 hover:text-[#6A0DAD]">
           ← Return to Home
         </Link>
       </div>

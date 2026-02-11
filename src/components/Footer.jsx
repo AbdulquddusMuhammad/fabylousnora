@@ -36,7 +36,7 @@ const Footer = () => {
     { name: "Refund Policy", id: "refund-policy" },
   ];
 
-  return location.pathname === "/events" || location.pathname === "/events/eventitem" || location.pathname === "/success" || location.pathname === "/" ? (
+  return location.pathname === "/events" || location.pathname === "/events/eventitem" || location.pathname === "/success" || location.pathname === "/login" ? (
     <></>
   ) : (
     <footer className="w-full bg-[#4A1F8C] text-white pt-12 pb-16 md:pt-16 md:pb-20 px-6 md:px-16 lg:px-24">
