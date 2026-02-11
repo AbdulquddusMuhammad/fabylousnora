@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import NoraLogo from "../components/IMG/noraLogo.png";
+import NoraLogo from "../components/IMG/noralogo.png";
 
 const BNLogo = () => (
   <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
