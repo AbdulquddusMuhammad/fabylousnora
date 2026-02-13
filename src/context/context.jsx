@@ -113,15 +113,19 @@ const AppProvider = ({ children }) => {
   useEffect(() => {
     getAllProducts()
       .then((data) => {
-        const formattedData = data.map((item) => ({
-          id: item.id,
-          isEvent: item.isEvent,
-          type: item.category.charAt(0).toUpperCase() + item.category.slice(1),
-          title: item.name,
-          price: Number(item.price),
-          image: item.image_url || "", // use correct property          category: item.filter_options,
-          // date: item.created_at.split("T")[0],
-        }));
+        const formattedData = data.map((item) =>
+          // alert(item.category),
+          ({
+            id: item.id,
+            isEvent: item.isEvent,
+            // type: item.category.charAt(0).toUpperCase() + item.category.slice(1),
+            type: item.category === "kids" ? "Children" : item.category.charAt(0).toUpperCase() + item.category.slice(1),
+            title: item.name,
+            price: Number(item.price),
+            image: item.image_url || "", // use correct property          category: item.filter_options,
+            // date: item.created_at.split("T")[0],
+          })
+        );
 
         setProductsData(formattedData);
         console.log(data);

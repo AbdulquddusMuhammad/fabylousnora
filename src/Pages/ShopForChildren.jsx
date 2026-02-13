@@ -126,6 +126,8 @@ const ShopForChildren = () => {
           <div className="flex-1">
             {/* CORRECTED LINE: Combine static grid/gap with dynamic column classes */}
             <div className={`grid gap-6 md:gap-8 ${gridColumnClasses}`}>
+              {/* {alert(type)} */}
+              {console.log(type)}
               {products
                 .filter((product) => product.type === type)
                 .map((product) => (
