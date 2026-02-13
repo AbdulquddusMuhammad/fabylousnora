@@ -46,7 +46,7 @@ const Footer = () => {
           {/* SECTION 1: Brand Info */}
           <div className="sm:col-span-1 lg:col-span-5 space-y-7">
             <h2 className="text-3xl md:text-4xl font-bold opacity-100" style={{ fontFamily: '"Playfair Display", serif' }}>
-              FabulousbyNora
+              Fabulous by Nora
             </h2>
 
             <p className="leading-relaxed text-sm md:text-base" style={{ fontFamily: "Nunito, sans-serif", lineHeight: "160%" }}>
