@@ -13,7 +13,7 @@ const EventItemShowCase = () => {
   const [showImage, setShowImage] = React.useState(false);
   const [selectedImage, setSelectedImage] = React.useState(null);
 
-  console.log(useContext(AppContext));
+  // console.log(useContext(AppContext));
 
   useEffect(() => {
     window.scrollTo({

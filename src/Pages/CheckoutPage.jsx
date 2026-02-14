@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
+import { useContext } from "react";
+import { AppContext } from "../context/context";
 
 // Replace with your real Publishable Key
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
@@ -85,6 +87,8 @@ function OrderSummary({ cartItems, shippingFee, handleMakePayment, isProcessing 
 
 // --- MAIN Component ---
 function CheckoutPage() {
+  const { cartItems: itemsSelected } = useContext(AppContext);
+
   const [isProcessing, setIsProcessing] = useState(false);
   const [formData, setFormData] = useState({
     deliveryOption: "shipping",
@@ -97,7 +101,8 @@ function CheckoutPage() {
     state: "",
   });
 
-  const [cartItems, setCartItems] = useState(DUMMY_CART_ITEMS);
+  const [cartItems, setCartItems] = useState(itemsSelected);
+  // const { cartItems } = useContext(AppContext);
   const [shippingFee, setShippingFee] = useState(15.0);
 
   const handleFormChange = (e) => {
@@ -120,28 +125,43 @@ function CheckoutPage() {
     setIsProcessing(true);
 
     try {
-      const YOUR_SUPABASE_PROJECT = import.meta.env.VITE_SUPABASE_URL;
-      // .split("https://")[1].split(".")[0]; // Extract project name from URL
       const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/stripe-setup`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           cartItems,
           email: formData.email,
         }),
       });
 
+      if (!response.ok) {
+        throw new Error("Failed to create checkout session");
+      }
+
       const session = await response.json();
-      if (session.error) throw new Error(session.error);
+
+      if (!session?.id) {
+        throw new Error("Invalid session response from server");
+      }
 
       const stripe = await stripePromise;
+
+      if (!stripe) {
+        throw new Error("Stripe failed to initialize");
+      }
+
       const { error } = await stripe.redirectToCheckout({
         sessionId: session.id,
       });
 
-      if (error) throw new Error(error.message);
+      if (error) {
+        throw new Error(error.message);
+      }
     } catch (err) {
       alert("Payment Error: " + err.message);
+      console.error(err);
     } finally {
       setIsProcessing(false);
     }

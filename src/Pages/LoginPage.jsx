@@ -55,15 +55,15 @@ export default function LoginPage() {
 
     if (email === loginsInfo.admin.email && password === loginsInfo.admin.password) {
       // Admin login successful
-      console.log("Admin logged in");
+      // console.log("Admin logged in");
       navigate("/admin");
     } else if (email === loginsInfo.user.email && password === loginsInfo.user.password) {
       // User login successful
-      console.log("User logged in");
+      // console.log("User logged in");
       navigate("/");
     } else {
       // Login failed
-      console.log("Login failed");
+      // console.log("Login failed");
     }
   };
 

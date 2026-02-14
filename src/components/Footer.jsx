@@ -5,9 +5,10 @@ import { faFacebookF, faInstagram, faTwitter, faLinkedinIn } from "@fortawesome/
 import { useLocation } from "react-router-dom";
 import { AppContext } from "../context/context";
 import { useContext } from "react";
+import { subscribe } from "../lib/supabaseClient";
 
 const Footer = () => {
-  const { setType } = useContext(AppContext);
+  const { setType, newLetterReg, setNewLetterReg, fromNewLetter, setFromNewLetter } = useContext(AppContext);
 
   const location = useLocation();
 
@@ -121,7 +122,15 @@ const Footer = () => {
               Subscribe to get latest offers
             </p>
 
-            <form className="relative max-w-xs" onSubmit={(e) => e.preventDefault()}>
+            <form
+              className="relative max-w-xs"
+              onSubmit={(e) => {
+                e.preventDefault();
+                subscribe(e.target[0].value);
+                e.target[0].value = "";
+                // setNewLetterReg(true);
+                setFromNewLetter(true);
+              }}>
               <input type="email" placeholder="Your email" className="w-full py-3 pr-14 bg-transparent border-b-2 border-white/40 focus:border-white outline-none transition-all duration-300 text-white placeholder-white/60" style={{ fontFamily: "Nunito, sans-serif", fontSize: "15px" }} />
               <button type="submit" className="absolute right-0 top-1/2 -translate-y-1/2 text-3xl hover:text-[#BD007C] transition duration-300">
                 →
