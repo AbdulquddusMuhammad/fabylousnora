@@ -103,8 +103,8 @@ const FilterSidebar = ({ onApply, onClose }) => {
           Types
         </h4>
         <div className="space-y-3">
-          {categories.map((cat) => (
-            <label key={cat} className="flex items-center cursor-pointer">
+          {categories.map((cat, index) => (
+            <label key={index} className="flex items-center cursor-pointer">
               <input type="checkbox" checked={selectedCats.includes(cat)} onChange={() => toggleCategory(cat)} className="w-5 h-5 text-[#BD007C] rounded focus:ring-[#BD007C]" />
               <span className="ml-3 text-gray-700">{cat}</span>
             </label>

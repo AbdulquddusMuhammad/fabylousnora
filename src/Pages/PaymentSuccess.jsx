@@ -91,7 +91,10 @@ export default function () {
         <h1 style={styles.title}>Transfer Successful</h1>
         <p style={styles.subtitle}>Your payment has been sent.</p>
 
-        <button style={styles.btn}>Done</button>
+        <Link to={"/"}>
+          {" "}
+          <button style={styles.btn}>Done</button>
+        </Link>
       </div>
 
       <style>{`

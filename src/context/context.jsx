@@ -133,6 +133,9 @@ const AppProvider = ({ children }) => {
   ];
 
   const [productsData, setProductsData] = useState([]);
+  const [newLetterReg, setNewLetterReg] = useState(false);
+  const [fromNewLetter, setFromNewLetter] = useState(false);
+  const [fromCustomOrder, setFromCustomOrder] = useState(false);
 
   useEffect(() => {
     getAllProducts()
@@ -144,12 +147,14 @@ const AppProvider = ({ children }) => {
           type: item.category === "kids" ? "Children" : item.category.charAt(0).toUpperCase() + item.category.slice(1),
           title: item.name,
           price: Number(item.price),
-          image: item.image_url || "", // use correct property          category: item.filter_options,
+          image: item.image_url || "",
+          description: item.description || "",
+          // use correct property          category: item.filter_options,
           // date: item.created_at.split("T")[0],
         }));
 
         setProductsData(formattedData);
-        console.log(data);
+        // console.log(data);
         // console.log(formattedData);
       })
       .catch((error) => {

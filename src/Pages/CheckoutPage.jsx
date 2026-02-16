@@ -262,7 +262,9 @@ function CheckoutPage() {
     try {
       const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/stripe-setup`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           cartItems,
           email: formData.email,
@@ -281,15 +283,29 @@ function CheckoutPage() {
         }),
       });
 
+      if (!response.ok) {
+        throw new Error("Failed to create checkout session");
+      }
+
       const session = await response.json();
-      if (session.error) throw new Error(session.error);
+
+      if (!session?.id) {
+        throw new Error("Invalid session response from server");
+      }
 
       const stripe = await stripePromise;
+
+      if (!stripe) {
+        throw new Error("Stripe failed to initialize");
+      }
+
       const { error } = await stripe.redirectToCheckout({
         sessionId: session.id,
       });
 
-      if (error) throw new Error(error.message);
+      if (error) {
+        throw new Error(error.message);
+      }
     } catch (err) {
       addToast("Payment Error: " + err.message, "error");
     } finally {

@@ -71,6 +71,7 @@ function ProductPage() {
 
   useEffect(() => {
     const foundProduct = productsData.find((p) => p.id === Number(id));
+    console.log(productsData);
     if (foundProduct) {
       setProduct(foundProduct);
       setSelectedImage(foundProduct.image);
@@ -178,7 +179,7 @@ function ProductPage() {
               </button>
             </div>
 
-            <div className="text-gray-600 leading-relaxed">{activeTab === "details" ? <ProductDetailsContent selectedSize={selectedSize} setSelectedSize={setSelectedSize} quantity={quantity} handleDecrement={handleDecrement} handleIncrement={handleIncrement} /> : <p className="whitespace-pre-line">{productDescriptionContent}</p>}</div>
+            <div className="text-gray-600 leading-relaxed">{activeTab === "details" ? <ProductDetailsContent selectedSize={selectedSize} setSelectedSize={setSelectedSize} quantity={quantity} handleDecrement={handleDecrement} handleIncrement={handleIncrement} /> : <p className="whitespace-pre-line">{product.description}</p>}</div>
           </div>
 
           <div className="h-px bg-gray-200 my-3"></div>

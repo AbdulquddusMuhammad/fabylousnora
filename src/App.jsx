@@ -23,7 +23,7 @@ import { useContext } from "react";
 import { AppContext } from "./context/context.jsx";
 import PaymentSuccess from "./Pages/PaymentSuccess.jsx";
 import Dashboard from "./Pages/Dashboard.jsx";
-
+import SuccessPopUp from "./components/SuccessPopUp.jsx";
 function App() {
   const { showCart, setShowCart, cartItems, setCartItems } = useContext(AppContext);
   const location = useLocation();
@@ -31,6 +31,7 @@ function App() {
   return (
     <>
       <Header />
+      <SuccessPopUp />
       <CartOverlay isOpen={showCart} onClose={() => setShowCart(false)} cartItems={cartItems} setCartItems={setCartItems} />
       {/* <LoginPage /> */}
       <Routes>
