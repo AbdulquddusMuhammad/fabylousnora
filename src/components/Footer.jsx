@@ -5,9 +5,10 @@ import { faFacebookF, faInstagram, faTwitter, faLinkedinIn } from "@fortawesome/
 import { useLocation } from "react-router-dom";
 import { AppContext } from "../context/context";
 import { useContext } from "react";
+import { subscribe } from "../lib/supabaseClient";
 
 const Footer = () => {
-  const { setType } = useContext(AppContext);
+  const { setType, newLetterReg, setNewLetterReg, fromNewLetter, setFromNewLetter } = useContext(AppContext);
 
   const location = useLocation();
 

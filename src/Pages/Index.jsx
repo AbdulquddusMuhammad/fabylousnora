@@ -22,25 +22,9 @@ import { AppContext } from "../context/context";
 const Index = () => {
   const { productsData } = useContext(AppContext);
 
-  const newArrivals = productsData
-    .filter((product) => {
-      const productDate = new Date(product.date);
-      const today = new Date();
-      const thirtyDaysAgo = new Date();
-      thirtyDaysAgo.setDate(today.getDate() - 30);
-      return productDate >= thirtyDaysAgo;
-    })
-    // Sort by date descending (newest first)
-    .sort((a, b) => new Date(b.date) - new Date(a.date))
-    // Take only the first 8 products
-    .slice(0, 8);
-
-  // const newArrivals = [
-  //   { id: 1, image: newArrival1, title: "Ankara Fabric For Ladies", price: 300 },
-  //   { id: 2, image: newArrival2, title: "Ankara Fabric For Ladies", price: 100 },
-  //   { id: 3, image: newArrival3, title: "Ankara Fabric For Ladies", price: 100 },
-  //   { id: 4, image: newArrival4, title: "Ankara Fabric For Ladies", price: 100 },
-  // ];
+  const newArrivals = productsData.filter((product) => {
+    return product.type === "Men";
+  });
 
   const queensCollection = productsData
     .filter((product) => product.type === "Women")
@@ -49,26 +33,12 @@ const Index = () => {
     // Take only the first 8 products
     .slice(0, 8);
 
-  // const queensCollection = [
-  //   { id: 5, image: newArrival3, title: "Ankara Fabric For Ladies", price: 300 },
-  //   { id: 6, image: newArrival1, title: "Ankara Fabric For Ladies", price: 100 },
-  //   { id: 7, image: newArrival4, title: "Ankara Fabric For Ladies", price: 100 },
-  //   { id: 8, image: newArrival2, title: "Ankara Fabric For Ladies", price: 100 },
-  // ];
-
   const accessories = productsData
     .filter((product) => product.type === "Accessories")
     // Sort by date descending (newest first)
     .sort((a, b) => new Date(b.date) - new Date(a.date))
     // Take only the first 8 products
     .slice(0, 8);
-
-  // const accessories = [
-  //   { id: 9, image: Jewelry1, title: "Gold Necklace Set", price: 180 },
-  //   { id: 10, image: Jewelry2, title: "Pearl Earrings", price: 120 },
-  //   { id: 11, image: Jewelry3, title: "Diamond Ring", price: 850 },
-  //   { id: 12, image: Jewelry4, title: "Silver Bracelet", price: 95 },
-  // ];
 
   return (
     <div className="bg-background min-h-screen">
@@ -79,7 +49,7 @@ const Index = () => {
       <main className="w-full">
         {/* New Arrivals */}
         <section className="pt-8 pb-12">
-          <ProductSection title="New Arrivals" products={newArrivals} />
+          <ProductSection title="Kings Collection" products={newArrivals} />
         </section>
 
         {/* Men & Women Category */}
