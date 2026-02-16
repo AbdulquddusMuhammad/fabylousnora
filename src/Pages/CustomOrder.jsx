@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import BackgroundImage from "../components/IMG/aboutusimgtwo.jpg";
+import { supabase } from '../lib/supabaseClient';
 
 function CustomOrder() {
   const [email, setEmail] = useState('');
   const [description, setDescription] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleFileChange = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -12,20 +14,63 @@ function CustomOrder() {
     }
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const formData = {
-      email,
-      description,
-      image: selectedFile ? selectedFile.name : 'No image uploaded'
-    };
-    console.log("Form Submitted:", formData);
-    alert("Request Sent Successfully! (Check console for details)");
+  const uploadImage = async (file) => {
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `custom-orders/${Math.random().toString(36).substring(2)}.${fileExt}`;
+      const filePath = `${fileName}`;
 
-    // Reset form
-    setEmail('');
-    setDescription('');
-    setSelectedFile(null);
+      const { error: uploadError } = await supabase.storage
+        .from('product-images') // Using existing bucket
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      const { data } = supabase.storage.from('product-images').getPublicUrl(filePath);
+      return data.publicUrl;
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      throw error;
+    }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setLoading(true);
+
+    try {
+      let imageUrl = null;
+      if (selectedFile) {
+        imageUrl = await uploadImage(selectedFile);
+      }
+
+      const { error } = await supabase.from('orders').insert([
+        {
+          email,
+          order_type: 'custom',
+          status: 'pending',
+          custom_details: { description },
+          images: imageUrl ? [imageUrl] : [],
+          total_amount: 0, // Will be set by admin later
+          shipping_address: {}, // Placeholder
+        }
+      ]);
+
+      if (error) throw error;
+
+      alert("Request Sent Successfully! We will contact you shortly.");
+
+      // Reset form
+      setEmail('');
+      setDescription('');
+      setSelectedFile(null);
+
+    } catch (error) {
+      console.error('Error submitting custom order:', error);
+      alert("Failed to send request. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -95,6 +140,7 @@ function CustomOrder() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               required
+              placeholder="Describe your design, measurements, fabric preferences..."
               className="w-full p-3 border border-gray-300 rounded-md text-sm resize-y focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition"
             />
           </div>
@@ -121,9 +167,10 @@ function CustomOrder() {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full mt-4 py-2 bg-[rgba(72,31,128,1)] hover:bg-[rgba(72,31,128,0.9)] text-white font-nunito font-semibold text-[12px] transition-all duration-200"
+            disabled={loading}
+            className={`w-full mt-4 py-2 bg-[rgba(72,31,128,1)] hover:bg-[rgba(72,31,128,0.9)] text-white font-nunito font-semibold text-[12px] transition-all duration-200 ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
           >
-            Send Request
+            {loading ? 'Sending...' : 'Send Request'}
           </button>
         </form>
       </div>

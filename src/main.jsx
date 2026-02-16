@@ -5,12 +5,16 @@ import App from "./App.jsx";
 import { AppProvider } from "./context/context.jsx";
 import { BrowserRouter, HashRouter } from "react-router-dom";
 
+import { ToastProvider } from "./context/ToastContext";
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AppProvider>
-      <HashRouter>
-        <App />
-      </HashRouter>
+      <ToastProvider>
+        <HashRouter>
+          <App />
+        </HashRouter>
+      </ToastProvider>
     </AppProvider>
   </StrictMode>
 );

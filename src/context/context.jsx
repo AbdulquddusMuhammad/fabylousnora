@@ -57,11 +57,35 @@ import Jewelry5 from "../components/IMG_WEBP/jewelry5.webp";
 import Jewelry6 from "../components/IMG_WEBP/jewelry6.webp";
 import Jewelry7 from "../components/IMG_WEBP/jewelry7.webp";
 import Jewelry8 from "../components/IMG_WEBP/jewelry8.webp";
-import { getAllProducts } from "../lib/supabaseClient";
+import { getAllProducts, supabase } from "../lib/supabaseClient";
 
 const AppContext = createContext();
 const AppProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [session, setSession] = useState(null);
   const [selectedCothes, setSelectedCothes] = useState(0);
+
+  useEffect(() => {
+    // Check active session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setUser(session?.user ?? null);
+    });
+
+    // Listen for changes
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const signOut = async () => {
+    await supabase.auth.signOut();
+  };
 
   const DUMMY_PRODUCTS = [
     { id: 1, isEvent: false, type: "Women", title: "African Suit Set", price: 189.99, image: newArrival1, category: "Agbada", date: "2026-08-03" },
@@ -142,7 +166,23 @@ const AppProvider = ({ children }) => {
   const [showCart, setShowCart] = useState(false);
   const [cartItems, setCartItems] = useState([]);
 
-  return <AppContext.Provider value={{ selectedCothes, setSelectedCothes, DUMMY_PRODUCTS, type, setType, showCart, setShowCart, cartItems, setCartItems, productsData }}>{children}</AppContext.Provider>;
+  return <AppContext.Provider value={{
+    user,
+    session,
+    signOut,
+    selectedCothes,
+    setSelectedCothes,
+    DUMMY_PRODUCTS,
+    type,
+    setType,
+    showCart,
+    setShowCart,
+    cartItems,
+    setCartItems,
+    productsData
+  }}>
+    {children}
+  </AppContext.Provider>;
 };
 export { AppContext, AppProvider };
 
