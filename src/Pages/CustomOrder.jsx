@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import BackgroundImage from "../components/IMG/aboutusimgtwo.jpg";
-import { supabase } from '../lib/supabaseClient';
-import { useToast } from '../context/ToastContext';
+import { supabase } from "../lib/supabaseClient";
+import { useToast } from "../context/ToastContext";
+import { useContext } from "react";
+import { AppContext } from "../context/context";
 
 function CustomOrder() {
   const [email, setEmail] = useState("");
@@ -20,20 +22,20 @@ function CustomOrder() {
 
   const uploadImage = async (file) => {
     try {
-      const fileExt = file.name.split('.').pop();
+      const fileExt = file.name.split(".").pop();
       const fileName = `custom-orders/${Math.random().toString(36).substring(2)}.${fileExt}`;
       const filePath = `${fileName}`;
 
       const { error: uploadError } = await supabase.storage
-        .from('product-images') // Using existing bucket
+        .from("product-images") // Using existing bucket
         .upload(filePath, file);
 
       if (uploadError) throw uploadError;
 
-      const { data } = supabase.storage.from('product-images').getPublicUrl(filePath);
+      const { data } = supabase.storage.from("product-images").getPublicUrl(filePath);
       return data.publicUrl;
     } catch (error) {
-      console.error('Error uploading image:', error);
+      console.error("Error uploading image:", error);
       throw error;
     }
   };
@@ -48,44 +50,48 @@ function CustomOrder() {
         imageUrl = await uploadImage(selectedFile);
       }
 
-      const { data, error } = await supabase.from('orders').insert([
-        {
-          email,
-          order_type: 'custom',
-          status: 'pending',
-          custom_details: { description },
-          images: imageUrl ? [imageUrl] : [],
-          total_amount: 0, // Will be set by admin later
-          shipping_address: {}, // Placeholder
-        }
-      ]).select(); // Add .select() to get the inserted data
+      const { data, error } = await supabase
+        .from("orders")
+        .insert([
+          {
+            email,
+            order_type: "custom",
+            status: "pending",
+            custom_details: { description },
+            images: imageUrl ? [imageUrl] : [],
+            total_amount: 0, // Will be set by admin later
+            shipping_address: {}, // Placeholder
+          },
+        ])
+        .select(); // Add .select() to get the inserted data
 
       if (error) throw error;
 
       // 3. Trigger Email Notification (Resend)
       // We don't block the UI for this, just fire and forget or log error quietly
-      supabase.functions.invoke('resend-order-alert', {
-        body: {
-          order_id: data[0].id,
-          email: email,
-          total_amount: 0, // Custom orders might not have price yet
-          order_type: 'custom',
-          items: [],
-          shipping_address: null
-        }
-      }).then(({ error }) => {
-        if (error) console.error("Failed to send email alert:", error);
-      });
+      supabase.functions
+        .invoke("resend-order-alert", {
+          body: {
+            order_id: data[0].id,
+            email: email,
+            total_amount: 0, // Custom orders might not have price yet
+            order_type: "custom",
+            items: [],
+            shipping_address: null,
+          },
+        })
+        .then(({ error }) => {
+          if (error) console.error("Failed to send email alert:", error);
+        });
 
       addToast("Request Sent Successfully! We will review it and get back to you shortly via email.", "success");
 
       // Reset form
-      setEmail('');
-      setDescription('');
+      setEmail("");
+      setDescription("");
       setSelectedFile(null);
-
     } catch (error) {
-      console.error('Error submitting custom order:', error);
+      console.error("Error submitting custom order:", error);
       addToast("Failed to send request. Please try again.", "error");
     } finally {
       setLoading(false);
@@ -138,15 +144,7 @@ function CustomOrder() {
             <label htmlFor="description" className="block font-nunito font-semibold text-[14px] text-gray-700 mb-1">
               Description
             </label>
-            <textarea
-              id="description"
-              rows={4}
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              required
-              placeholder="Describe your design, measurements, fabric preferences..."
-              className="w-full p-3 border border-gray-300 rounded-md text-sm resize-y focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition"
-            />
+            <textarea id="description" rows={4} value={description} onChange={(e) => setDescription(e.target.value)} required placeholder="Describe your design, measurements, fabric preferences..." className="w-full p-3 border border-gray-300 rounded-md text-sm resize-y focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition" />
           </div>
 
           {/* Image Upload */}
@@ -163,12 +161,8 @@ function CustomOrder() {
           </div>
 
           {/* Submit Button */}
-          <button
-            type="submit"
-            disabled={loading}
-            className={`w-full mt-4 py-2 bg-[rgba(72,31,128,1)] hover:bg-[rgba(72,31,128,0.9)] text-white font-nunito font-semibold text-[12px] transition-all duration-200 ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
-          >
-            {loading ? 'Sending...' : 'Send Request'}
+          <button type="submit" disabled={loading} className={`w-full mt-4 py-2 bg-[rgba(72,31,128,1)] hover:bg-[rgba(72,31,128,0.9)] text-white font-nunito font-semibold text-[12px] transition-all duration-200 ${loading ? "opacity-70 cursor-not-allowed" : ""}`}>
+            {loading ? "Sending..." : "Send Request"}
           </button>
         </form>
       </div>

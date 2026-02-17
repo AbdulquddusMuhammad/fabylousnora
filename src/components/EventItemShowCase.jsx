@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import { AppContext } from "../context/context";
 import calenderIcon from "../components/IMG/calendar.svg";
@@ -6,9 +6,11 @@ import cancelButton from "../components/IMG/cancelIcon.svg";
 import { Link } from "react-router-dom";
 
 const EventItemShowCase = () => {
-  const { eventProductsClothes, selectedCothes, productsData } = useContext(AppContext);
+  const { eventProductsClothes, selectedCothes, DUMMY_PRODUCTS } = useContext(AppContext);
 
-  const [{ name: title }] = productsData;
+  const [productsData, setProductsData] = useState(DUMMY_PRODUCTS);
+
+  // const [{ name: title }] = productsData;
 
   const [showImage, setShowImage] = React.useState(false);
   const [selectedImage, setSelectedImage] = React.useState(null);
@@ -44,7 +46,7 @@ const EventItemShowCase = () => {
           <Link to="/events" className="text-[#000000CC] text-[2.5vw] md:text-[1.2vw]">
             <span className="text-[#00000066]">Gallery</span>
           </Link>{" "}
-          / {productsData[selectedCothes]?.title}
+          / {productsData[selectedCothes].title}
         </div>
         <div className="eventsClothes grid grid-cols-2 md:grid-cols-4 bg-white justify-between mt-10 ">
           {productsData

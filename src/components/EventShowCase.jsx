@@ -12,7 +12,9 @@ import React from "react";
 import galleryHero from "../components/IMG_WEBP/Fabulous gallery.webp";
 
 const EventShowCase = () => {
-  const { eventProductsClothes, selectedCothes, setSelectedCothes, productsData } = useContext(AppContext);
+  const { eventProductsClothes, selectedCothes, setSelectedCothes, DUMMY_PRODUCTS } = useContext(AppContext);
+
+  const [productsData, setProductsData] = useState(DUMMY_PRODUCTS);
 
   const navigate = useNavigate();
 
