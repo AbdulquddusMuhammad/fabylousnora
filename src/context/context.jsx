@@ -64,6 +64,7 @@ const AppProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [session, setSession] = useState(null);
   const [selectedCothes, setSelectedCothes] = useState(0);
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
   useEffect(() => {
     // Check active session
@@ -133,43 +134,67 @@ const AppProvider = ({ children }) => {
   ];
 
   const [productsData, setProductsData] = useState([]);
-  const [newLetterReg, setNewLetterReg] = useState(false);
-  const [fromNewLetter, setFromNewLetter] = useState(false);
-  const [fromCustomOrder, setFromCustomOrder] = useState(false);
+  const [eventsData, setEventsData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     getAllProducts()
       .then((data) => {
         const formattedData = data.map((item) => ({
           id: item.id,
           isEvent: item.isEvent,
-          // type: item.category.charAt(0).toUpperCase() + item.category.slice(1),
           type: item.category === "kids" ? "Children" : item.category.charAt(0).toUpperCase() + item.category.slice(1),
           title: item.name,
           price: Number(item.price),
           image: item.image_url || "",
           description: item.description || "",
-          // use correct property          category: item.filter_options,
-          // date: item.created_at.split("T")[0],
         }));
 
         setProductsData(formattedData);
-        // console.log(data);
-        // console.log(formattedData);
       })
       .catch((error) => {
         console.error("Error fetching products:", error);
         setProductsData([]);
+      })
+      .finally(() => {
+        setLoading(false);
       });
 
-    // console.log(productsData);
+    // Fetch Events
+    supabase
+      .from("events")
+      .select("*")
+      .order("date", { ascending: false })
+      .then(({ data, error }) => {
+        if (error) {
+          console.error("Error fetching events:", error);
+        } else {
+          setEventsData(data || []);
+        }
+      });
   }, []);
 
   // console.log(productsData);
 
   const [type, setType] = useState("");
   const [showCart, setShowCart] = useState(false);
-  const [cartItems, setCartItems] = useState([]);
+
+  // Initialize cart from localStorage
+  const [cartItems, setCartItems] = useState(() => {
+    try {
+      const savedCart = localStorage.getItem("cartItems");
+      return savedCart ? JSON.parse(savedCart) : [];
+    } catch (error) {
+      console.error("Error parsing cart from localStorage:", error);
+      return [];
+    }
+  });
+
+  // Save cart to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
 
   return <AppContext.Provider value={{
     user,
@@ -177,6 +202,8 @@ const AppProvider = ({ children }) => {
     signOut,
     selectedCothes,
     setSelectedCothes,
+    selectedEvent,
+    setSelectedEvent,
     DUMMY_PRODUCTS,
     type,
     setType,
@@ -184,7 +211,9 @@ const AppProvider = ({ children }) => {
     setShowCart,
     cartItems,
     setCartItems,
-    productsData
+    productsData,
+    eventsData,
+    loading
   }}>
     {children}
   </AppContext.Provider>;

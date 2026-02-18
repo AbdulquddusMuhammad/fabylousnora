@@ -24,6 +24,7 @@ import { AppContext } from "./context/context.jsx";
 import PaymentSuccess from "./Pages/PaymentSuccess.jsx";
 import Dashboard from "./Pages/Dashboard.jsx";
 import SuccessPopUp from "./components/SuccessPopUp.jsx";
+import OrderPayment from "./Pages/OrderPayment.jsx";
 function App() {
   const { showCart, setShowCart, cartItems, setCartItems } = useContext(AppContext);
   const location = useLocation();
@@ -59,6 +60,9 @@ function App() {
 
         {/* Checkout */}
         <Route path="/checkout" element={<CheckoutPage />} />
+
+        {/* Custom Order Payment */}
+        <Route path="/pay/:orderId" element={<OrderPayment />} />
 
         <Route path="/admin" element={<AdminDashboard />} />
       </Routes>

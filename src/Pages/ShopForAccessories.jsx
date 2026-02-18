@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { AppContext } from "../context/context";
 import { motion } from "framer-motion";
 import Heroimg from "../components/IMG_WEBP/abouthero.webp";
@@ -8,11 +8,28 @@ import FilterSidebar from "./FilterSidebar";
 import ProductCard from "./ProductCard.jsx"; // Adjust the path as needed
 import accessoreHero from "../components/IMG_WEBP/accessoreHero.webp"; // Assuming this is the correct path for the hero image
 
+import Pagination from "../components/Pagination";
+import ProductSkeleton from "../components/ProductSkeleton";
+
 const ShopForAccessories = () => {
-  const { productsData, type } = useContext(AppContext);
+  const { productsData, type, loading } = useContext(AppContext);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [products, setProducts] = useState(productsData);
   const [sortOption, setSortOption] = useState("default"); // New state for sorting
+
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12;
+
+  // Update local products when context data changes
+  useEffect(() => {
+    setProducts(productsData);
+  }, [productsData]);
+
+  // Reset page when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [type]);
 
   const applySorting = (currentProducts, option) => {
     const sortedProducts = [...currentProducts];
@@ -33,6 +50,7 @@ const ShopForAccessories = () => {
       return catOk && priceOk;
     });
     setProducts(applySorting(filtered, sortOption));
+    setCurrentPage(1); // Reset to first page
   };
 
   const handleSortChange = (e) => {
@@ -40,6 +58,15 @@ const ShopForAccessories = () => {
     setSortOption(newSortOption);
     setProducts(applySorting(products, newSortOption));
   };
+
+  const typeFiltered = products.filter((product) => product.type === "Accessories");
+  const totalItems = typeFiltered.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  const currentProducts = typeFiltered.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   // CORRECTED: Define gridColumnClasses to ONLY contain the column definitions
   const gridColumnClasses = isFilterOpen ? "grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3" : "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4";
@@ -65,7 +92,7 @@ const ShopForAccessories = () => {
             </button>
 
             <p className="text-gray-600 font-medium">
-              {products.length} product{products.length !== 1 ? "s" : ""} found
+              {loading ? "Loading..." : `${totalItems} product${totalItems !== 1 ? "s" : ""} found`}
             </p>
           </div>
 
@@ -127,17 +154,22 @@ const ShopForAccessories = () => {
             {/* CORRECTED LINE: Combine static grid/gap with dynamic column classes */}
             <div className={`grid gap-6 md:gap-8 ${gridColumnClasses}`}>
               {/* {alert(type)} */}
-              {products
-                .filter((product) => product.type === type)
-                .map((product) => (
+              {loading
+                ? Array.from({ length: 8 }).map((_, i) => <ProductSkeleton key={i} />)
+                : currentProducts.map((product) => (
                   <ProductCard key={product.id} id={product.id} image={product.image} title={product.title} price={product.price} />
                 ))}
-              {/* {products.map((product) => (
-                <ProductCard key={product.id} id={product.id} image={product.image} title={product.title} price={product.price} />
-              ))} */}
             </div>
 
-            {products.length === 0 && <p className="text-center text-gray-500 py-20 text-xl font-medium">No products match your filters. Try adjusting them!</p>}
+            {!loading && currentProducts.length === 0 && <p className="text-center text-gray-500 py-20 text-xl font-medium">No products match your filters. Try adjusting them!</p>}
+
+            {!loading && (
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+              />
+            )}
           </div>
         </div>
 
