@@ -155,19 +155,23 @@ const NewsletterForm = () => {
     setMessage("");
 
     try {
-      // Using Supabase client found in context or creating a direct fetch to the function URL
-      // Since we might not have supabase client in Footer scope easily without import, let's assume we can fetch directly or use the one from context if available.
-      // Better: Import supabase client directly.
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-      // Dynamic import to avoid top-level dependency issues if any, or just fetch if we know the URL structure.
-      // But standard way is sending to the function.
-      const { supabase } = await import("../lib/supabaseClient");
-
-      const { data, error } = await supabase.functions.invoke('mailerlite-newsletter', {
-        body: { email }
+      const response = await fetch(`${supabaseUrl}/functions/v1/mailerlite-newsletter`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${supabaseAnonKey}`,
+        },
+        body: JSON.stringify({ email }),
       });
 
-      if (error) throw error;
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || data.message || "Failed to subscribe");
+      }
 
       setStatus("success");
       setMessage(data?.message || "Subscribed successfully!");
@@ -195,7 +199,9 @@ const NewsletterForm = () => {
           type="submit"
           disabled={status === 'loading' || status === 'success'}
           className="absolute right-0 top-1/2 -translate-y-1/2 text-3xl hover:text-[#BD007C] transition duration-300 disabled:opacity-50">
-          {status === 'loading' ? '...' : '→'}
+          {status === 'loading' ? (
+            <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+          ) : '→'}
         </button>
       </form>
       {message && (
