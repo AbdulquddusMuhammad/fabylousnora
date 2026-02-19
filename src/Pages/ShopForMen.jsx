@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom"; // Don't forget this import!
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AppContext } from "../context/context.jsx"; // Adjust the path as needed
 import FilterSidebar from "./FilterSidebar.jsx";
 import ProductCard from "./ProductCard.jsx";
+
+import Pagination from "../components/Pagination";
+import ProductSkeleton from "../components/ProductSkeleton";
 
 import Heroimg from "../components/IMG_WEBP/abouthero.webp"; // Assuming this is the correct path for the hero image
 import newArrival1 from "../components/IMG_WEBP/newarrival1.webp";
@@ -20,10 +23,24 @@ import Jewelry4 from "../components/IMG_WEBP/jewelry4.webp";
 // 4. Main ShopForMen Component (UPDATED gridClasses definition)
 // ==========================
 const ShopForMen = () => {
-  const { productsData, type } = useContext(AppContext);
+  const { productsData, type, loading } = useContext(AppContext);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [products, setProducts] = useState(productsData);
   const [sortOption, setSortOption] = useState("default"); // New state for sorting
+
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12;
+
+  // Update local products when context data changes
+  useEffect(() => {
+    setProducts(productsData);
+  }, [productsData]);
+
+  // Reset page when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [type]);
 
   const applySorting = (currentProducts, option) => {
     const sortedProducts = [...currentProducts];
@@ -44,6 +61,7 @@ const ShopForMen = () => {
       return catOk && priceOk;
     });
     setProducts(applySorting(filtered, sortOption));
+    setCurrentPage(1);
   };
 
   const handleSortChange = (e) => {
@@ -51,6 +69,15 @@ const ShopForMen = () => {
     setSortOption(newSortOption);
     setProducts(applySorting(products, newSortOption));
   };
+
+  const typeFiltered = products.filter((product) => product.type === "Men");
+  const totalItems = typeFiltered.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  const currentProducts = typeFiltered.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   // CORRECTED: Define gridColumnClasses to ONLY contain the column definitions
   const gridColumnClasses = isFilterOpen ? "grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3" : "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4";
@@ -76,7 +103,7 @@ const ShopForMen = () => {
             </button>
 
             <p className="text-gray-600 font-medium">
-              {products.length} product{products.length !== 1 ? "s" : ""} found
+              {loading ? "Loading..." : `${totalItems} product${totalItems !== 1 ? "s" : ""} found`}
             </p>
           </div>
 
@@ -137,17 +164,22 @@ const ShopForMen = () => {
           <div className="flex-1">
             {/* CORRECTED LINE: Combine static grid/gap with dynamic column classes */}
             <div className={`grid gap-6 md:gap-8 ${gridColumnClasses}`}>
-              {products
-                .filter((product) => product.type === type)
-                .map((product) => (
+              {loading
+                ? Array.from({ length: 8 }).map((_, i) => <ProductSkeleton key={i} />)
+                : currentProducts.map((product) => (
                   <ProductCard key={product.id} id={product.id} image={product.image} title={product.title} price={product.price} />
                 ))}
-              {/* {products.map((product) => (
-                <ProductCard key={product.id} id={product.id} image={product.image} title={product.title} price={product.price} />
-              ))} */}
             </div>
 
-            {products.length === 0 && <p className="text-center text-gray-500 py-20 text-xl font-medium">No products match your filters. Try adjusting them!</p>}
+            {!loading && currentProducts.length === 0 && <p className="text-center text-gray-500 py-20 text-xl font-medium">No products match your filters. Try adjusting them!</p>}
+
+            {!loading && (
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+              />
+            )}
           </div>
         </div>
 

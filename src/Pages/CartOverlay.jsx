@@ -62,8 +62,8 @@ function CartItem({ item, setCartItems }) {
  * CartOverlay component for the slide-in shopping cart drawer.
  */
 function CartOverlay({ isOpen, onClose, cartItems, setCartItems }) {
-  console.log("first");
-  console.log(cartItems);
+  // console.log("first");
+  // console.log(cartItems);
   const drawerTransitionClasses = isOpen ? "translate-x-0" : "translate-x-full";
   const backdropOpacityClasses = isOpen ? "opacity-100" : "opacity-0 pointer-events-none";
 

@@ -57,11 +57,36 @@ import Jewelry5 from "../components/IMG_WEBP/jewelry5.webp";
 import Jewelry6 from "../components/IMG_WEBP/jewelry6.webp";
 import Jewelry7 from "../components/IMG_WEBP/jewelry7.webp";
 import Jewelry8 from "../components/IMG_WEBP/jewelry8.webp";
-import { getAllProducts } from "../lib/supabaseClient";
+import { getAllProducts, supabase } from "../lib/supabaseClient";
 
 const AppContext = createContext();
 const AppProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [session, setSession] = useState(null);
   const [selectedCothes, setSelectedCothes] = useState(0);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+
+  useEffect(() => {
+    // Check active session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setUser(session?.user ?? null);
+    });
+
+    // Listen for changes
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const signOut = async () => {
+    await supabase.auth.signOut();
+  };
 
   const DUMMY_PRODUCTS = [
     { id: 1, isEvent: false, type: "Women", title: "African Suit Set", price: 189.99, image: newArrival1, category: "Agbada", date: "2026-08-03" },
@@ -109,45 +134,89 @@ const AppProvider = ({ children }) => {
   ];
 
   const [productsData, setProductsData] = useState([]);
-  const [newLetterReg, setNewLetterReg] = useState(false);
-  const [fromNewLetter, setFromNewLetter] = useState(false);
-  const [fromCustomOrder, setFromCustomOrder] = useState(false);
+  const [eventsData, setEventsData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     getAllProducts()
       .then((data) => {
         const formattedData = data.map((item) => ({
           id: item.id,
           isEvent: item.isEvent,
-          // type: item.category.charAt(0).toUpperCase() + item.category.slice(1),
           type: item.category === "kids" ? "Children" : item.category.charAt(0).toUpperCase() + item.category.slice(1),
           title: item.name,
           price: Number(item.price),
           image: item.image_url || "",
           description: item.description || "",
-          // use correct property          category: item.filter_options,
-          // date: item.created_at.split("T")[0],
         }));
 
         setProductsData(formattedData);
-        // console.log(data);
-        // console.log(formattedData);
       })
       .catch((error) => {
         console.error("Error fetching products:", error);
         setProductsData([]);
+      })
+      .finally(() => {
+        setLoading(false);
       });
 
-    // console.log(productsData);
+    // Fetch Events
+    supabase
+      .from("events")
+      .select("*")
+      .order("date", { ascending: false })
+      .then(({ data, error }) => {
+        if (error) {
+          console.error("Error fetching events:", error);
+        } else {
+          setEventsData(data || []);
+        }
+      });
   }, []);
 
   // console.log(productsData);
 
   const [type, setType] = useState("");
   const [showCart, setShowCart] = useState(false);
-  const [cartItems, setCartItems] = useState([]);
 
-  return <AppContext.Provider value={{ selectedCothes, setSelectedCothes, DUMMY_PRODUCTS, type, setType, showCart, setShowCart, cartItems, setCartItems, productsData, newLetterReg, setNewLetterReg, fromNewLetter, setFromNewLetter, fromCustomOrder, setFromCustomOrder }}>{children}</AppContext.Provider>;
+  // Initialize cart from localStorage
+  const [cartItems, setCartItems] = useState(() => {
+    try {
+      const savedCart = localStorage.getItem("cartItems");
+      return savedCart ? JSON.parse(savedCart) : [];
+    } catch (error) {
+      console.error("Error parsing cart from localStorage:", error);
+      return [];
+    }
+  });
+
+  // Save cart to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
+
+  return <AppContext.Provider value={{
+    user,
+    session,
+    signOut,
+    selectedCothes,
+    setSelectedCothes,
+    selectedEvent,
+    setSelectedEvent,
+    DUMMY_PRODUCTS,
+    type,
+    setType,
+    showCart,
+    setShowCart,
+    cartItems,
+    setCartItems,
+    productsData,
+    eventsData,
+    loading
+  }}>
+    {children}
+  </AppContext.Provider>;
 };
 export { AppContext, AppProvider };
 

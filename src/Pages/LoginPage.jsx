@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import NoraLogo from "../components/IMG/noralogo.png";
+import { supabase } from "../lib/supabaseClient";
+import { useToast } from "../context/ToastContext";
 
 const BNLogo = () => (
   <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -28,42 +30,52 @@ const EyeIcon = ({ show }) =>
   );
 
 export default function LoginPage() {
+  const { addToast } = useToast();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [emailFocused, setEmailFocused] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [emailError, setEmailError] = useState("");
 
   const navigate = useNavigate();
 
-  const loginsInfo = {
-    admin: { email: "admin@gmail.com", password: "admin123" },
-    user: { email: "user@gmail.com", password: "user123" },
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email) {
-      setEmailError("Please enter your email.");
+      addToast("Please enter your email.", "error");
       return;
     }
-    setEmailError("");
-    setLoading(true);
-    setTimeout(() => setLoading(false), 2000);
+    if (!password) {
+      addToast("Please enter your password.", "error");
+      return;
+    }
 
-    if (email === loginsInfo.admin.email && password === loginsInfo.admin.password) {
-      // Admin login successful
-      // console.log("Admin logged in");
-      navigate("/admin");
-    } else if (email === loginsInfo.user.email && password === loginsInfo.user.password) {
-      // User login successful
-      // console.log("User logged in");
-      navigate("/");
-    } else {
-      // Login failed
-      // console.log("Login failed");
+    setLoading(true);
+
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) throw error;
+
+      console.log("Login successful:", data);
+      addToast("Login successful! Redirecting...", "success");
+
+      // Simple admin check - ideally getting this from a profile table
+      if (email === "admin@gmail.com") {
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
+
+    } catch (error) {
+      console.error("Login failed:", error.message);
+      addToast(error.message || "Login failed. Please check your credentials.", "error");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -93,10 +105,9 @@ export default function LoginPage() {
               style={{
                 ...styles.input,
                 ...(emailFocused ? styles.inputFocused : {}),
-                ...(emailError ? styles.inputError : {}),
               }}
             />
-            {emailError && <p style={styles.errorText}>{emailError}</p>}
+
           </div>
 
           {/* Password Field */}

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import NoraLogo from "../components/IMG/noralogo.png";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 const BNLogo = () => (
   <svg width="38" height="38" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -30,14 +30,29 @@ export default function () {
   const [confettiVisible, setConfettiVisible] = useState(false);
   const [confetti] = useState(generateConfetti);
 
+  const [searchParams] = useSearchParams();
+  const orderId = searchParams.get("order_id");
+
   useEffect(() => {
     const t1 = setTimeout(() => setCheckAnimate(true), 200);
     const t2 = setTimeout(() => setConfettiVisible(true), 100);
+
+    // Trigger Email & Status Update
+    if (orderId) {
+      import("../lib/supabaseClient").then(({ supabase }) => {
+        supabase.functions.invoke('resend-order-alert', {
+          body: { order_id: orderId }
+        }).then(({ error }) => {
+          if (error) console.error("Failed to process order alert:", error);
+        });
+      });
+    }
+
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
     };
-  }, []);
+  }, [orderId]);
 
   return (
     <div style={styles.page}>
