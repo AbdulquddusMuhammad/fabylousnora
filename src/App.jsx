@@ -13,7 +13,6 @@ import ProductPage from "./Pages/ProductPage";
 import CheckoutPage from "./Pages/CheckoutPage";
 import CustomOrder from "./Pages/CustomOrder";
 import RefundPolicy from "./Pages/RefundPolicy";
-import AdminDashboard from "./Pages/AdminDashboard";
 import Events from "./Pages/Events";
 import EventShowCase from "./components/EventShowCase";
 import EventItem from "./components/EventItemShowCase";
@@ -63,8 +62,6 @@ function App() {
 
         {/* Custom Order Payment */}
         <Route path="/pay/:orderId" element={<OrderPayment />} />
-
-        <Route path="/admin" element={<AdminDashboard />} />
       </Routes>
 
       <Footer />
