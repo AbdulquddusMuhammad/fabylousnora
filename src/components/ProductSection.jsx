@@ -29,7 +29,7 @@ const ProductSection = ({ title, products }) => {
                 }, 500);
               }, 500);
             }}
-            to={`/category/${title === "Complete Your Look" ? "Accessories" : title}`}
+            to={`/category/${title === "Complete Your Look" ? "Accessories" : title === "Kings Collection" ? "men" : title === "The Queens Collection" ? "women" : title}`}
             className="group">
             <button className="hidden md:block text-[#BD007C] font-bold text-base md:text-lg tracking-wider hover:underline whitespace-nowrap" style={{ fontFamily: "Nunito, sans-serif" }}>
               Shop Now →
