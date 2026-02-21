@@ -8,6 +8,7 @@ import countryDialInfo from "../../data/country_dail_info.json";
 import { AppContext } from "../context/context";
 import { useContext } from "react";
 import { ChevronDown, Check } from "lucide-react";
+import { useEffect } from "react";
 
 // Replace with your real Publishable Key
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
