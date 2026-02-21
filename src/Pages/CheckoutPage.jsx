@@ -17,22 +17,14 @@ function FlagSelect({ selectedCode, onChange, options }) {
   const [isOpen, setIsOpen] = useState(false);
 
   // Find selected option
-  const selectedOption = options.find(o => o.dial_code === selectedCode);
+  const selectedOption = options.find((o) => o.dial_code === selectedCode);
 
   return (
     <div className="relative border-r border-gray-300">
-      <button
-        type="button"
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 bg-gray-50 text-gray-900 text-sm focus:bg-white h-full px-3 py-3 min-w-[110px] outline-none"
-      >
+      <button type="button" onClick={() => setIsOpen(!isOpen)} className="flex items-center gap-2 bg-gray-50 text-gray-900 text-sm focus:bg-white h-full px-3 py-3 min-w-[110px] outline-none">
         {selectedOption ? (
           <>
-            <img
-              src={`https://flagcdn.com/w40/${selectedOption.code.toLowerCase()}.png`}
-              alt={selectedOption.name}
-              className="w-6 h-auto object-contain"
-            />
+            <img src={`https://flagcdn.com/w40/${selectedOption.code.toLowerCase()}.png`} alt={selectedOption.name} className="w-6 h-auto object-contain" />
             <span>{selectedOption.dial_code}</span>
           </>
         ) : (
@@ -54,13 +46,8 @@ function FlagSelect({ selectedCode, onChange, options }) {
                   onChange(country.dial_code);
                   setIsOpen(false);
                 }}
-                className={`flex items-center gap-3 px-4 py-2 cursor-pointer hover:bg-gray-50 ${selectedCode === country.dial_code ? 'bg-pink-50' : ''}`}
-              >
-                <img
-                  src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png`}
-                  alt={country.name}
-                  className="w-6 h-auto shadow-sm"
-                />
+                className={`flex items-center gap-3 px-4 py-2 cursor-pointer hover:bg-gray-50 ${selectedCode === country.dial_code ? "bg-pink-50" : ""}`}>
+                <img src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png`} alt={country.name} className="w-6 h-auto shadow-sm" />
                 <span className="text-gray-900 font-medium w-12">{country.dial_code}</span>
                 <span className="text-gray-600 text-xs truncate flex-1">{country.name}</span>
                 {selectedCode === country.dial_code && <Check className="w-4 h-4 text-[#EC4899]" />}
@@ -86,16 +73,7 @@ function PhoneInputField({ label, name, value, onChange, dialCode, onDialCodeCha
           onChange={(code) => onDialCodeChange({ target: { value: code } })} // Mock event for compatibility
           options={countryDialInfo}
         />
-        <input
-          type="tel"
-          name={name}
-          id={name}
-          value={value}
-          onChange={onChange}
-          required={required}
-          placeholder="Phone number"
-          className="flex-1 px-3 py-3 outline-none text-gray-900 rounded-r-lg"
-        />
+        <input type="tel" name={name} id={name} value={value} onChange={onChange} required={required} placeholder="Phone number" className="flex-1 px-3 py-3 outline-none text-gray-900 rounded-r-lg" />
       </div>
     </div>
   );
@@ -120,15 +98,7 @@ function SelectField({ label, name, value, onChange, options, required = true, d
       <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1">
         {label} {required && <span className="text-red-500">*</span>}
       </label>
-      <select
-        name={name}
-        id={name}
-        value={value}
-        onChange={onChange}
-        required={required}
-        disabled={disabled}
-        className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-[#EC4899] focus:border-[#EC4899] outline-none bg-white disabled:bg-gray-100 disabled:text-gray-400"
-      >
+      <select name={name} id={name} value={value} onChange={onChange} required={required} disabled={disabled} className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-[#EC4899] focus:border-[#EC4899] outline-none bg-white disabled:bg-gray-100 disabled:text-gray-400">
         <option value="">{placeholder}</option>
         {options.map((option) => (
           <option key={option.value} value={option.value}>
@@ -174,14 +144,7 @@ const OrderSummary = ({ cartItems, shippingFee, handleMakePayment, isProcessing,
         </div>
         <div className="flex justify-between">
           <span>Shipping Fee:</span>
-          <span className="font-medium">
-            {deliveryOption === "pickup"
-              ? "Free"
-              : shippingFee === 0
-                ? <span className="text-gray-500 italic text-sm">Enter address</span>
-                : `$${shippingFee.toFixed(2)}`
-            }
-          </span>
+          <span className="font-medium">{deliveryOption === "pickup" ? "Free" : shippingFee === 0 ? <span className="text-gray-500 italic text-sm">Enter address</span> : `$${shippingFee.toFixed(2)}`}</span>
         </div>
       </div>
 
@@ -208,7 +171,7 @@ const OrderSummary = ({ cartItems, shippingFee, handleMakePayment, isProcessing,
       </button> */}
     </div>
   );
-}
+};
 
 // --- MAIN Component ---
 function CheckoutPage() {
@@ -232,6 +195,10 @@ function CheckoutPage() {
     zipCode: "",
   });
 
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
+
   const { cartItems, user } = useContext(AppContext);
 
   // Redirect if cart is empty
@@ -251,15 +218,14 @@ function CheckoutPage() {
 
   // --- Derived State for Location Dropdowns ---
   const countryOptions = useMemo(() => {
-    return countriesData.map(c => ({ label: c.name, value: c.name }));
+    return countriesData.map((c) => ({ label: c.name, value: c.name }));
   }, []);
 
   const stateOptions = useMemo(() => {
-    const selectedCountry = countriesData.find(c => c.name === formData.country);
+    const selectedCountry = countriesData.find((c) => c.name === formData.country);
     if (!selectedCountry || !selectedCountry.states) return [];
-    return selectedCountry.states.map(s => ({ label: s.name, value: s.name }));
+    return selectedCountry.states.map((s) => ({ label: s.name, value: s.name }));
   }, [formData.country]);
-
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
@@ -270,10 +236,10 @@ function CheckoutPage() {
       // Dependent Dropdown Logic
       if (name === "country") {
         updates.state = ""; // Reset state when country changes
-        updates.city = "";  // Reset city when country changes
+        updates.city = ""; // Reset city when country changes
 
         // Auto-select dial code based on country name
-        const matchedCountry = countryDialInfo.find(c => c.name === value);
+        const matchedCountry = countryDialInfo.find((c) => c.name === value);
         if (matchedCountry) {
           updates.dialCode = matchedCountry.dial_code;
         }
@@ -285,7 +251,8 @@ function CheckoutPage() {
     });
 
     // Reset verification if address fields change
-    if (["address", "city", "state", "zipCode", "country"].includes(name)) { // Added country
+    if (["address", "city", "state", "zipCode", "country"].includes(name)) {
+      // Added country
       setAddressVerified(false);
       setShippingRates([]);
       setSelectedRate(null);
@@ -294,7 +261,7 @@ function CheckoutPage() {
   };
 
   const handleDialCodeChange = (e) => {
-    setFormData(prev => ({ ...prev, dialCode: e.target.value }));
+    setFormData((prev) => ({ ...prev, dialCode: e.target.value }));
   };
 
   const handleDeliveryOptionChange = (option) => {
@@ -323,7 +290,7 @@ function CheckoutPage() {
             city: formData.city,
             state: formData.state,
             zipCode: formData.zipCode,
-            country: formData.country // Shippo might need this if international
+            country: formData.country,
           },
         },
       });
@@ -339,19 +306,18 @@ function CheckoutPage() {
       // Update form with normalized address if available (Optional, sometimes distracting)
       // Keeping it as is for now
       if (data.normalizedAddress) {
-        setFormData(prev => ({
+        setFormData((prev) => ({
           ...prev,
           address: data.normalizedAddress.street,
           city: data.normalizedAddress.city,
           state: data.normalizedAddress.state,
-          zipCode: data.normalizedAddress.zipCode
+          zipCode: data.normalizedAddress.zipCode,
         }));
       }
 
       setAddressVerified(true);
       addToast("Address successfully verified!", "success");
       fetchShippingRates(); // Auto-fetch rates if valid
-
     } catch (err) {
       console.error("Address Validation Error:", err);
       addToast(err.message || "Address Validation Failed", "error");
@@ -372,7 +338,7 @@ function CheckoutPage() {
             city: formData.city,
             state: formData.state,
             zipCode: formData.zipCode,
-            country: formData.country // Pass country
+            country: formData.country,
           },
           packageDetails: { weight: 16 }, // Approximate weight
         },
@@ -437,7 +403,7 @@ function CheckoutPage() {
             state: formData.state,
             zipCode: formData.zipCode,
             country: formData.country,
-            phone: `${formData.dialCode} ${formData.phoneNumber}`
+            phone: formData.phoneNumber,
           },
           userId: user?.id, // From AppContext -> user
         }),
@@ -503,33 +469,9 @@ function CheckoutPage() {
           <>
             {/* Reordered: Country First */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
-              <SelectField
-                label="Country"
-                name="country"
-                value={formData.country}
-                onChange={handleFormChange}
-                options={countryOptions}
-                placeholder="Select Country"
-              />
+              <SelectField label="Country" name="country" value={formData.country} onChange={handleFormChange} options={countryOptions} placeholder="Select Country" />
 
-              {stateOptions.length > 0 ? (
-                <SelectField
-                  label="State / Province"
-                  name="state"
-                  value={formData.state}
-                  onChange={handleFormChange}
-                  options={stateOptions}
-                  placeholder="Select State"
-                  disabled={!formData.country}
-                />
-              ) : (
-                <InputField
-                  label="State / Province"
-                  name="state"
-                  value={formData.state}
-                  onChange={handleFormChange}
-                />
-              )}
+              {stateOptions.length > 0 ? <SelectField label="State / Province" name="state" value={formData.state} onChange={handleFormChange} options={stateOptions} placeholder="Select State" disabled={!formData.country} /> : <InputField label="State / Province" name="state" value={formData.state} onChange={handleFormChange} />}
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
@@ -540,11 +482,7 @@ function CheckoutPage() {
             <InputField label="Shipping Address" name="address" value={formData.address} onChange={handleFormChange} />
 
             <div className="mt-4 mb-6">
-              <button
-                onClick={validateAddress}
-                disabled={isValidating || addressVerified}
-                className={`px-4 py-2 rounded text-white font-bold text-sm ${addressVerified ? 'bg-green-600' : 'bg-blue-600'}`}
-              >
+              <button onClick={validateAddress} disabled={isValidating || addressVerified} className={`px-4 py-2 rounded text-white font-bold text-sm ${addressVerified ? "bg-green-600" : "bg-blue-600"}`}>
                 {isValidating ? "Validating..." : addressVerified ? "✓ Verified" : "Verify Address"}
               </button>
               {addressVerified && <p className="text-green-600 text-xs mt-1">Address confirmed via USPS</p>}
@@ -556,13 +494,11 @@ function CheckoutPage() {
                 <h3 className="font-bold text-gray-700 mb-2">Select Shipping Method</h3>
                 <div className="space-y-2">
                   {shippingRates.map((rate) => (
-                    <div
-                      key={rate.id}
-                      onClick={() => handleRateSelect(rate)}
-                      className={`p-3 border rounded cursor-pointer flex justify-between items-center ${selectedRate?.id === rate.id ? 'border-[#EC4899] bg-pink-50' : 'border-gray-300'}`}
-                    >
+                    <div key={rate.id} onClick={() => handleRateSelect(rate)} className={`p-3 border rounded cursor-pointer flex justify-between items-center ${selectedRate?.id === rate.id ? "border-[#EC4899] bg-pink-50" : "border-gray-300"}`}>
                       <div>
-                        <p className="font-semibold text-sm">{rate.provider} {rate.servicelevel}</p>
+                        <p className="font-semibold text-sm">
+                          {rate.provider} {rate.servicelevel}
+                        </p>
                         <p className="text-xs text-gray-500">{rate.duration_terms}</p>
                       </div>
                       <span className="font-bold">${rate.amount}</span>
@@ -572,14 +508,7 @@ function CheckoutPage() {
               </div>
             )}
 
-            <PhoneInputField
-              label="Phone Number"
-              name="phoneNumber"
-              value={formData.phoneNumber}
-              onChange={handleFormChange}
-              dialCode={formData.dialCode}
-              onDialCodeChange={handleDialCodeChange}
-            />
+            <PhoneInputField label="Phone Number" name="phoneNumber" value={formData.phoneNumber} onChange={handleFormChange} dialCode={formData.dialCode} onDialCodeChange={handleDialCodeChange} />
           </>
         )}
 
@@ -599,13 +528,7 @@ function CheckoutPage() {
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-10">
         <div className="lg:col-span-3">{ContactShippingFormJSX}</div>
         <div className="lg:col-span-2">
-          <OrderSummary
-            cartItems={cartItems}
-            shippingFee={shippingFee}
-            handleMakePayment={handleMakePayment}
-            isProcessing={isProcessing}
-            deliveryOption={formData.deliveryOption}
-          />
+          <OrderSummary cartItems={cartItems} shippingFee={shippingFee} handleMakePayment={handleMakePayment} isProcessing={isProcessing} deliveryOption={formData.deliveryOption} />
         </div>
       </div>
 

@@ -19,6 +19,7 @@ export const supabase = createClient(supabaseUrl, supabaseKey, {
 // Helper: Get all products
 export async function getAllProducts() {
   const { data, error } = await supabase.from("products_v_2").select("*").order("created_at", { ascending: false });
+  console.log(data);
 
   if (error) {
     console.error("Error fetching products:", error);
@@ -183,54 +184,3 @@ export async function customOrder(details, image) {
 ////////////////////////////////////Custom Order
 ////////////////////////////////////Custom Order
 ////////////////////////////////////Custom Order
-
-// ///////////////////////////////////Check Out///////////////////////////////
-// ///////////////////////////////////Check Out///////////////////////////////
-// ///////////////////////////////////Check Out///////////////////////////////
-// // supabase/functions/create-checkout-session/index.ts
-// import { serve } from "https://deno.land/std@0.177.0/http/server.ts";
-// import Stripe from "stripe";
-
-// const stripeSecret = Deno.env.get(import.meta.env.STRIPE_SECRET_KEY);
-// if (!stripeSecret) throw new Error("STRIPE_SECRET_KEY is not set");
-
-// const stripe = new Stripe(stripeSecret, {
-//   apiVersion: "2022-11-15",
-// });
-
-// serve(async (req) => {
-//   try {
-//     const { cartItems, email } = await req.json();
-
-//     const line_items = cartItems.map((item) => ({
-//       price_data: {
-//         currency: "usd",
-//         product_data: { name: item.title },
-//         unit_amount: Math.round(item.price * 100),
-//       },
-//       quantity: item.quantity,
-//     }));
-
-//     const session = await stripe.checkout.sessions.create({
-//       payment_method_types: ["card"],
-//       line_items,
-//       mode: "payment",
-//       success_url: "https://your-frontend.com/success",
-//       cancel_url: "https://your-frontend.com/cancel",
-//       customer_email: email,
-//     });
-
-//     return new Response(JSON.stringify({ id: session.id }), {
-//       headers: { "Content-Type": "application/json" },
-//     });
-//   } catch (err) {
-//     return new Response(JSON.stringify({ error: err.message }), {
-//       headers: { "Content-Type": "application/json" },
-//       status: 500,
-//     });
-//   }
-// });
-
-// ///////////////////////////////////Check Out///////////////////////////////
-// ///////////////////////////////////Check Out///////////////////////////////
-// ///////////////////////////////////Check Out///////////////////////////////
