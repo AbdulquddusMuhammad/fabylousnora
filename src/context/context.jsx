@@ -164,7 +164,7 @@ const AppProvider = ({ children }) => {
     // Fetch Events
     supabase
       .from("events")
-      .select("*")
+      .select("*, event_gallery(*)")
       .order("date", { ascending: false })
       .then(({ data, error }) => {
         if (error) {
