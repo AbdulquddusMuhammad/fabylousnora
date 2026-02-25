@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import HeroImg from "../components/IMG_WEBP/heroimg.webp";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
@@ -51,9 +52,11 @@ const Hero = () => {
           </motion.p>
 
           {/* Button */}
-          <motion.button initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.4, duration: 0.8, ease: "easeOut" }} className="mt-12 px-10 sm:px-16 py-4 bg-white text-[#BD007C] font-medium text-lg sm:text-xl rounded-lg shadow-2xl hover:shadow-amber-500/40 transition-all duration-300 hover:scale-105 block mx-auto min-w-[200px]" style={{ fontFamily: "Nunito, sans-serif" }}>
-            Shop Now
-          </motion.button>
+          <Link to={"/category/women"}>
+            <motion.button initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.4, duration: 0.8, ease: "easeOut" }} className="mt-12 px-10 sm:px-16 py-4 bg-white text-[#BD007C] font-medium text-lg sm:text-xl rounded-lg shadow-2xl hover:shadow-amber-500/40 transition-all duration-300 hover:scale-105 block mx-auto min-w-[200px]" style={{ fontFamily: "Nunito, sans-serif" }}>
+              Shop Now
+            </motion.button>
+          </Link>
         </motion.div>
       </div>
 
