@@ -13,7 +13,6 @@ const ProductSection = ({ title, products }) => {
         <div className="flex items-center justify-between mb-2 md:mb-10 flex-wrap gap-3">
           <h2 className="text-l md:text-2xl font-bold leading-tight" style={{ fontFamily: '"Libre Baskerville", serif' }}>
             {title}
-            {/* {alert(title)} */}
           </h2>
 
           {/* This is your original "Shop Now →" – visible only on desktop */}

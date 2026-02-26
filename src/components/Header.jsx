@@ -100,7 +100,6 @@ const Header = () => {
                 className={`px-5 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap
                 ${activeCategory === cat ? "bg-[#BD007C] text-white" : "text-[#BD007C] bg-[#CCCCCC1A] hover:bg-[#BD007C] hover:text-white"}`}>
                 {cat}
-                {/* {alert(cat)} */}
               </Link>
             ))}
           </nav>
