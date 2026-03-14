@@ -71,7 +71,7 @@ We may update these Terms at any time. Continued use of the site means you accep
 These Terms are governed by the laws of the State of Texas.
 
 15. Contact Us
-Email: info@fabulousbynora.com`,
+Email: fabulousbynoraapparels@gmail.com`,
   },
 
   privacy: {
@@ -104,7 +104,7 @@ We do not sell your data. We only share with trusted partners (payment processor
 Used to improve performance, remember cart items, and analyze traffic. You can disable cookies in your browser.
 
 6. Your Rights & Choices
-You may access, correct, delete your data, or opt out of marketing. Contact: info@fabulousbynora.com
+You may access, correct, delete your data, or opt out of marketing. Contact: fabulousbynoraapparels@gmail.com
 
 7. Third-Party Links & Children's Privacy
 We are not responsible for external sites. We do not collect data from children under 13.
@@ -113,7 +113,7 @@ We are not responsible for external sites. We do not collect data from children 
 Updates will be posted here with a new “Last Updated” date.
 
 9. Contact Us
-Email: info@fabulousbynora.com`,
+Email: fabulousbynoraapparels@gmail.com`,
   },
 
   shipping: {
@@ -147,7 +147,7 @@ Once handed to the carrier, responsibility transfers. Contact the carrier first;
 Customs delays may occur. We cannot mark packages as “gift”.
 
 8. Contact Us
-Email: info@fabulousbynora.com`,
+Email: fabulousbynoraapparels@gmail.com`,
   },
 
   refund: {
@@ -182,7 +182,7 @@ No refunds for fit issues due to incorrect measurements provided by customer.
 Approved returns processed in 3–7 business days.
 
 9. Contact Us
-Email: info@fabulousbynora.com`,
+Email: fabulousbynoraapparels@gmail.com`,
   },
 };
 
@@ -212,8 +212,12 @@ function RefundPolicy() {
               className={`px-6 py-2 text-sm sm:text-base font-semibold tracking-wider transition-all duration-300 border-b-2 ${activeTab === key ? `text-[${activeColor}] border-[${activeColor}]` : "text-gray-600 border-transparent hover:text-gray-900"}`}
               style={{
                 fontFamily: "'Playfair Display', serif",
-                borderBottom: activeTab === key ? `2px solid ${activeColor}` : "2px solid transparent",
-              }}>
+                borderBottom:
+                  activeTab === key
+                    ? `2px solid ${activeColor}`
+                    : "2px solid transparent",
+              }}
+            >
               {policy.title}
             </button>
           ))}
@@ -221,18 +225,32 @@ function RefundPolicy() {
 
         {/* Content Card */}
         <div className="bg-white shadow-xl rounded-lg p-8 sm:p-12">
-          <h1 className="text-2xl sm:text-3xl font-bold text-center mb-4" style={{ fontFamily: "'Playfair Display', serif", color: activeColor }}>
+          <h1
+            className="text-2xl sm:text-3xl font-bold text-center mb-4"
+            style={{
+              fontFamily: "'Playfair Display', serif",
+              color: activeColor,
+            }}
+          >
             {policies[activeTab].title}
           </h1>
-          <p className="text-center text-gray-500 mb-10">Last Updated: {policies[activeTab].lastUpdated}</p>
+          <p className="text-center text-gray-500 mb-10">
+            Last Updated: {policies[activeTab].lastUpdated}
+          </p>
 
-          <div className="prose prose-lg max-w-none text-gray-700 whitespace-pre-line leading-relaxed">{policies[activeTab].content}</div>
+          <div className="prose prose-lg max-w-none text-gray-700 whitespace-pre-line leading-relaxed">
+            {policies[activeTab].content}
+          </div>
 
           <div className="mt-12 text-center">
             <p className="text-sm text-gray-500">
               Questions? Email us at{" "}
-              <a href="mailto:info@fabulousbynora.com" className="underline" style={{ color: activeColor }}>
-                info@fabulousbynora.com
+              <a
+                href="mailto:fabulousbynoraapparels@gmail.com"
+                className="underline"
+                style={{ color: activeColor }}
+              >
+                fabulousbynoraapparels@gmail.com
               </a>
             </p>
           </div>
