@@ -180,20 +180,34 @@ const AppProvider = ({ children }) => {
   const [type, setType] = useState("");
   const [showCart, setShowCart] = useState(false);
 
-  // Initialize cart from localStorage
+  // Initialize cart from localStorage with 24-hour expiration
   const [cartItems, setCartItems] = useState(() => {
     try {
-      const savedCart = localStorage.getItem("cartItems");
-      return savedCart ? JSON.parse(savedCart) : [];
+      const savedData = localStorage.getItem("cartData");
+      if (savedData) {
+        const { items, timestamp } = JSON.parse(savedData);
+        // Check if the timestamp is older than 24 hours (24 * 60 * 60 * 1000 ms)
+        const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
+        if (Date.now() - timestamp < TWENTY_FOUR_HOURS) {
+          return items;
+        } else {
+          // Expired, clear it from localStorage
+          localStorage.removeItem("cartData");
+        }
+      }
     } catch (error) {
       console.error("Error parsing cart from localStorage:", error);
-      return [];
     }
+    return [];
   });
 
-  // Save cart to localStorage whenever it changes
+  // Save cart and current timestamp to localStorage whenever it changes
   useEffect(() => {
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    const dataToSave = {
+      items: cartItems,
+      timestamp: Date.now(),
+    };
+    localStorage.setItem("cartData", JSON.stringify(dataToSave));
   }, [cartItems]);
 
   return <AppContext.Provider value={{
