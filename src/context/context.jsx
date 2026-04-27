@@ -1,4 +1,4 @@
-import { createContext, useEffect } from "react";
+import { act, createContext, useEffect } from "react";
 import { useState } from "react";
 import eventSample1 from "../components/IMG_WEBP/eventSample1.webp";
 import eventSample2 from "../components/IMG_WEBP/eventSample2.webp";
@@ -64,6 +64,7 @@ const AppProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [session, setSession] = useState(null);
   const [selectedCothes, setSelectedCothes] = useState(0);
+  const [activeTab, setActiveTab] = useState("");
   const [selectedEvent, setSelectedEvent] = useState(null);
 
   useEffect(() => {
@@ -228,7 +229,9 @@ const AppProvider = ({ children }) => {
     setCartItems,
     productsData,
     eventsData,
-    loading
+    loading,
+    activeTab,
+    setActiveTab,
   }}>
     {children}
   </AppContext.Provider>;

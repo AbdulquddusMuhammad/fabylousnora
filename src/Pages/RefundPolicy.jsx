@@ -1,5 +1,10 @@
 // src/Pages/RefundPolicy.jsx
+import { CloudCog } from "lucide-react";
 import React, { useState, useEffect } from "react";
+import { useContext } from "react";
+import { AppContext } from "../context/context";
+
+
 
 const policies = {
   terms: {
@@ -187,8 +192,10 @@ Email: fabulousbynoraapparels@gmail.com`,
 };
 
 function RefundPolicy() {
-  const [activeTab, setActiveTab] = useState("refund");
+  // const [activeTab, setActiveTab] = useState("refund");
+  const { activeTab, setActiveTab } = useContext(AppContext);
   const activeColor = "rgba(189, 0, 124, 1)"; // Your brand magenta-purple
+
 
   // Always scroll to top when the page is visited
   useEffect(() => {
@@ -198,7 +205,7 @@ function RefundPolicy() {
         behavior: "smooth",
       });
     }, 500);
-  }, []);
+  }, [activeTab]);
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">

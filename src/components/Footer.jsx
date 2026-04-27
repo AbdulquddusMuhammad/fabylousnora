@@ -20,9 +20,15 @@ const Footer = () => {
     setNewLetterReg,
     fromNewLetter,
     setFromNewLetter,
+    activeTab,
+    setActiveTab,
   } = useContext(AppContext);
 
   const location = useLocation();
+
+  const selectTab = (tabName) => {
+    setActiveTab(tabName);
+  };
 
   // Navigation items using IDs to match your header logic
   const categories = [
@@ -42,11 +48,11 @@ const Footer = () => {
   };
 
   const quickLinks = [
-    { name: "About Us", id: "aboutus" },
-    { name: "Privacy Policy", id: "privacy-policy" },
-    { name: "Shipping Policy", id: "shipping-policy" },
-    { name: "Terms & Condition", id: "terms-and-conditions" },
-    { name: "Refund Policy", id: "refund-policy" },
+    { name: "About Us", id: "/aboutus" },
+    { name: "Privacy Policy", id: "/refund/", activetabName: "privacy" },
+    { name: "Shipping Policy", id: "/refund/", activetabName: "shipping" },
+    { name: "Terms & Condition", id: "/refund/", activetabName: "terms" },
+    { name: "Refund Policy", id: "/refund/", activetabName: "refund" },
   ];
 
   return location.pathname === "/success" || location.pathname === "/login" ? (
@@ -155,6 +161,7 @@ const Footer = () => {
                   <li key={item.name}>
                     <Link
                       to={`${item.id}`}
+                      onClick={() => selectTab(item.activetabName)}
                       className="hover:text-[#BD007C] transition duration-300 text-sm block cursor-pointer"
                       style={{ fontFamily: "Nunito, sans-serif" }}
                     >
