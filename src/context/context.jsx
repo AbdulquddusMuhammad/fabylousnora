@@ -147,7 +147,8 @@ const AppProvider = ({ children }) => {
           type: item.category === "kids" ? "Children" : item.category.charAt(0).toUpperCase() + item.category.slice(1),
           title: item.name,
           price: Number(item.price),
-          image: item.image_url || "",
+          image: (item.image_urls && item.image_urls.length > 0) ? item.image_urls[0] : (item.image_url || ""),
+          images: item.image_urls || (item.image_url ? [item.image_url] : []),
           description: item.description || "",
         }));
 

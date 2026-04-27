@@ -141,20 +141,28 @@ function ProductPage() {
           </div>
 
           <div className="hidden lg:flex lg:flex-col lg:gap-6 lg:justify-start">
-            {[product.image, product.image, product.image].map((img, i) => (
-              <div key={i} onClick={() => setSelectedImage(img)} className="w-28 h-34 cursor-pointer">
+            {product.images && product.images.length > 0 ? product.images.map((img, i) => (
+              <div key={i} onClick={() => setSelectedImage(img)} className={`w-28 h-34 cursor-pointer border-2 ${selectedImage === img ? 'border-[#6A0DAD]' : 'border-transparent hover:border-gray-300'}`}>
                 <img src={img} alt="" className="w-full h-full object-cover" />
               </div>
-            ))}
+            )) : (
+              <div onClick={() => setSelectedImage(product.image)} className="w-28 h-34 cursor-pointer border-2 border-[#6A0DAD]">
+                <img src={product.image} alt="" className="w-full h-full object-cover" />
+              </div>
+            )}
           </div>
         </div>
 
-        <div className="flex justify-center gap-5 mt-6 lg:hidden">
-          {[product.image, product.image, product.image].map((img, i) => (
-            <div key={i} onClick={() => setSelectedImage(img)} className="w-24 h-24 cursor-pointer">
+        <div className="flex justify-center gap-5 mt-6 lg:hidden flex-wrap">
+          {product.images && product.images.length > 0 ? product.images.map((img, i) => (
+            <div key={i} onClick={() => setSelectedImage(img)} className={`w-24 h-24 cursor-pointer border-2 ${selectedImage === img ? 'border-[#6A0DAD]' : 'border-transparent hover:border-gray-300'}`}>
               <img src={img} alt="" className="w-full h-full object-cover" />
             </div>
-          ))}
+          )) : (
+            <div onClick={() => setSelectedImage(product.image)} className="w-24 h-24 cursor-pointer border-2 border-[#6A0DAD]">
+              <img src={product.image} alt="" className="w-full h-full object-cover" />
+            </div>
+          )}
         </div>
 
         {/* ==================== DETAILS SECTION ==================== */}
